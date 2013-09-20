@@ -15,33 +15,30 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "urlmatch.h"
 #include "internal.h"
 
-int url_simplematch(const char find[], const char hay[]) {
+u32 countwilds(const char str[]) {
 
-	const u32 wilds = countwilds(find);
+	u32 sum = 0;
 
-	// Easiest path: no wildcards
-	if (!wilds) {
-		return strcmp(find, hay) == 0;
+	const char *ptr = str;
+	for (; *ptr; ptr++) {
+		if (*ptr == '*') sum++;
 	}
 
-	const u32 len = strlen(find);
-	const u32 hlen = strlen(hay);
-	u32 i, h = 0;
+	return sum;
+}
 
-	for (i = 0; i < len; i++) {
-		if (find[i] != '*') {
-			if (find[i] != hay[h])
-				return 0;
-			h++;
-		} else {
-			if (i == len - 1)
-				return 1;
+const char *strrstr(const char hay[], const char needle[]) {
 
-			// Wildcard, not last
-			const char * const ender = strchrnul(&find[i + 1], '*');
-		}
+	const char *next;
+	next = strstr(hay, needle);
+	if (!next) return NULL;
+
+	while (1) {
+		const char *prev = next;
+		next = strstr(next + 1, needle);
+
+		if (!next) return prev;
 	}
 }
