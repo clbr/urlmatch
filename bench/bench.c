@@ -30,7 +30,7 @@ int main() {
 	struct timeval start, end;
 	u32 ms;
 
-	printf("Starting testing.\n");
+	printf("Starting testing.\n\n");
 	gettimeofday(&start, NULL);
 	simple();
 	gettimeofday(&end, NULL);
