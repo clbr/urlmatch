@@ -98,6 +98,7 @@ static void simple() {
 		for (j = 0; j < rules; j++) {
 			if (url_simplematch(ruling[j], urling[i])) break;
 		}
+		if (i % 10000 == 0) {printf("."); fflush(stdout);}
 	}
 }
 
@@ -111,7 +112,7 @@ static void opti() {
 
 int main() {
 
-	srand(time(NULL));
+	srand(42);
 
 	printf("Generating %u urls and %u rules.\n", urls, rules);
 	gen();
@@ -139,7 +140,7 @@ int main() {
 	ms = (end.tv_sec - start.tv_sec) * 1000;
 	ms += (end.tv_usec - start.tv_usec) / 1000;
 	if (!ms) ms = 1;
-	printf("Optimized init took %u ms\n",
+	printf("Optimized init took %u ms.\n",
 		ms);
 
 
