@@ -14,7 +14,7 @@ static const char **urling;
 
 static char *genurl() {
 
-	const u32 len = (rand() % 80) + 5;
+	const u32 len = (rand() % 80) + 10;
 	char *buf = calloc(len + 1, 1);
 
 	u32 i;
@@ -32,16 +32,16 @@ static char *genurl() {
 	}
 
 	for (i = strlen(buf); i < len; i++) {
-		const u32 type = rand() % 3;
+		const u32 type = rand() % 10;
 
 		switch (type) {
-			case 0:
+			case 0 ... 6:
 				buf[i] = 'a' + rand() % 26;
 			break;
-			case 1:
+			case 7:
 				buf[i] = '0' + rand() % 10;
 			break;
-			case 2:
+			case 8 ... 9:
 				buf[i] = ':' + rand() % 7;
 			break;
 		}
@@ -82,10 +82,12 @@ static void gen() {
 	u32 i;
 	for (i = 0; i < rules; i++) {
 		ruling[i] = genrule();
+		//printf("Rule %u: %s\n", i, ruling[i]);
 	}
 
 	for (i = 0; i < urls; i++) {
 		urling[i] = genurl();
+		//printf("URL %u: %s\n", i, urling[i]);
 	}
 }
 
