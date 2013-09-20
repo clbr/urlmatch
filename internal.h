@@ -18,6 +18,8 @@
 #ifndef INTERNAL_H
 #define INTERNAL_H
 
+#define _GNU_SOURCE
+
 #include <lrtypes.h>
 #include <string.h>
 
