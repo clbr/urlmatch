@@ -3,4 +3,3 @@
 all:
 
 clean:
-	$(MAKE) -C test clean
