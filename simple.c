@@ -57,3 +57,7 @@ u32 countwilds(const char str[]) {
 
 	return sum;
 }
+
+const char *strrstr(const char hay[], const char needle[]) {
+
+}

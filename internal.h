@@ -26,6 +26,7 @@
 #pragma GCC visibility push(hidden)
 
 u32 countwilds(const char str[]);
+const char *strrstr(const char hay[], const char needle[]);
 
 #pragma GCC visibility pop
 
