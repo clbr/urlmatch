@@ -1,4 +1,4 @@
-.PHONY: all clean
+.PHONY: all clean test
 
 CFLAGS += -Wall -Wextra
 
@@ -16,3 +16,6 @@ $(OBJ): $(HDR)
 
 clean:
 	$(MAKE) -C test clean
+
+test:
+	$(MAKE) -C test
