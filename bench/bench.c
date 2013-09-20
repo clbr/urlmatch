@@ -17,6 +17,12 @@ static char *genurl() {
 
 static char *genrule() {
 
+	const u32 len = (rand() % 10) + 5;
+	char *buf = calloc(len + 1, 1);
+
+	
+
+	return buf;
 }
 
 static void gen() {
@@ -43,6 +49,10 @@ static void simple() {
 	}
 }
 
+static void opti_init() {
+
+}
+
 static void opti() {
 
 }
@@ -67,6 +77,20 @@ int main() {
 	if (!ms) ms = 1;
 	printf("Simple backend took %u ms, or %u checks per millisecond.\n",
 		ms, urls / ms);
+
+
+
+	gettimeofday(&start, NULL);
+	opti_init();
+	gettimeofday(&end, NULL);
+
+	ms = end.tv_sec - start.tv_sec;
+	ms += (end.tv_usec - start.tv_usec) / 1000;
+	if (!ms) ms = 1;
+	printf("Optimized init took %u ms\n",
+		ms);
+
+
 
 	gettimeofday(&start, NULL);
 	opti();
