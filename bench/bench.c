@@ -37,8 +37,8 @@ int main() {
 
 	ms = end.tv_sec - start.tv_sec;
 	ms += (end.tv_usec - start.tv_usec) * 1000;
-	printf("Simple backend took %u ms, or %u checks per second.\n",
-		ms, urls / (ms / 1000));
+	printf("Simple backend took %u ms, or %u checks per millisecond.\n",
+		ms, urls / ms);
 
 	gettimeofday(&start, NULL);
 	opti();
@@ -46,8 +46,8 @@ int main() {
 
 	ms = end.tv_sec - start.tv_sec;
 	ms += (end.tv_usec - start.tv_usec) * 1000;
-	printf("Simple backend took %u ms, or %u checks per second.\n",
-		ms, urls / (ms / 1000));
+	printf("Simple backend took %u ms, or %u checks per millisecond.\n",
+		ms, urls / ms);
 
 	return 0;
 }
