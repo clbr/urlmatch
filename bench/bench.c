@@ -212,8 +212,12 @@ int main() {
 	printf("Optimized backend took %u ms, or %.2f checks per millisecond.\n\n",
 		ms, (float) urls / ms);
 
-
-
+/*
+	glibc regex uses a fuckton of RAM, causing this to die in just some dozen
+	iterations. Only enable if you have a sane libc where calling regexec does
+	not allocate memory.
+*/
+#if 0
 	gettimeofday(&start, NULL);
 	reg_init();
 	gettimeofday(&end, NULL);
@@ -235,6 +239,6 @@ int main() {
 	if (!ms) ms = 1;
 	printf("Regex took %u ms, or %.2f checks per millisecond.\n",
 		ms, (float) urls / ms);
-
+#endif
 	return 0;
 }
