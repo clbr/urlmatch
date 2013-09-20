@@ -50,7 +50,7 @@ urlctx *url_init(const char contents[]) WUR_FUNC;
 // Save an optimized binary file for faster loading later.
 int url_save_optimized(const urlctx *ctx, const char file[]) WUR_FUNC;
 
-// Returns 1 if haystack matches pattern, 0 otherwise.
+// Returns 1 if haystack matches the optimized pattern, 0 otherwise.
 int url_match(const urlctx *ctx, const char haystack[]) WUR_FUNC PURE_FUNC;
 
 #undef PURE_FUNC
