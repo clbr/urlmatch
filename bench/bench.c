@@ -128,8 +128,8 @@ int main() {
 	ms = (end.tv_sec - start.tv_sec) * 1000;
 	ms += (end.tv_usec - start.tv_usec) / 1000;
 	if (!ms) ms = 1;
-	printf("Simple backend took %u ms, or %u checks per millisecond.\n",
-		ms, urls / ms);
+	printf("Simple backend took %u ms, or %.2f checks per millisecond.\n",
+		ms, (float) urls / ms);
 
 
 
@@ -152,8 +152,8 @@ int main() {
 	ms = end.tv_sec - start.tv_sec;
 	ms += (end.tv_usec - start.tv_usec) / 1000;
 	if (!ms) ms = 1;
-	printf("Optimized backend took %u ms, or %u checks per millisecond.\n",
-		ms, urls / ms);
+	printf("Optimized backend took %u ms, or %.2f checks per millisecond.\n",
+		ms, (float) urls / ms);
 
 	return 0;
 }
