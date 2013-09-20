@@ -15,4 +15,9 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "urlmatch.h"
+#ifndef URLMATCH_H
+#define URLMATCH_H
+
+int simplematch(const char pattern[], const char haystack[]);
+
+#endif
