@@ -11,9 +11,26 @@ static const u32 rules = 1500;
 static const char **ruling;
 static const char **urling;
 
+static char *genurl() {
+
+}
+
+static char *genrule() {
+
+}
+
 static void gen() {
 	ruling = calloc(rules, sizeof(char *));
 	urling = calloc(urls, sizeof(char *));
+
+	u32 i;
+	for (i = 0; i < rules; i++) {
+		ruling[i] = genrule();
+	}
+
+	for (i = 0; i < urls; i++) {
+		urling[i] = genurl();
+	}
 }
 
 static void simple() {
