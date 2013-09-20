@@ -14,7 +14,7 @@ static const u32 rules = 1500;
 static const char **ruling;
 static const char **urling;
 
-static regex_t *regex;
+static regex_t regex;
 
 static char *genurl() {
 
@@ -116,13 +116,34 @@ static void opti() {
 
 static void reg_init() {
 
+	u32 totlen = 1, i;
+	for (i = 0; i < rules; i++) {
+		totlen += strlen(ruling[i]) + 1;
+	}
+
+	char *tmp = calloc(totlen, 1);
+
+	for (i = 0; i < rules; i++) {
+		strcat(tmp, ruling[i]);
+		if (i != rules - 1) strcat(tmp, "|");
+	}
+
+	for (i = 1; i < totlen; i++) {
+		if (tmp[i] == '*')
+			tmp[i-1] = '.';
+	}
+
+	int ret = regcomp(&regex, tmp, REG_EXTENDED | REG_NOSUB);
+	if (ret) puts("Failed to compile regex");
+
+	free(tmp);
 }
 
 static void reg() {
 
 	u32 i;
 	for (i = 0; i < urls; i++) {
-		regexec(regex, urling[i], 0, NULL, 0);
+		regexec(&regex, urling[i], 0, NULL, 0);
 
 		if (i % 10000 == 0) {printf("."); fflush(stdout);}
 	}
