@@ -5,8 +5,11 @@
 #include <lrtypes.h>
 #include "urlmatch.h"
 
-const u32 urls = 1000 * 1000;
-const u32 rules = 1500;
+static const u32 urls = 1000 * 1000;
+static const u32 rules = 1500;
+
+static const char **ruling;
+static const char **urling;
 
 static void gen() {
 
