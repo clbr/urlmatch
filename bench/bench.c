@@ -4,6 +4,8 @@
 #include <time.h>
 #include <lrtypes.h>
 #include <string.h>
+#include <sys/types.h>
+#include <regex.h>
 #include "urlmatch.h"
 
 static const u32 urls = 1000 * 1000;
@@ -11,6 +13,8 @@ static const u32 rules = 1500;
 
 static const char **ruling;
 static const char **urling;
+
+static regex_t *regex;
 
 static char *genurl() {
 
@@ -110,6 +114,14 @@ static void opti() {
 
 }
 
+static void reg_init() {
+
+}
+
+static void reg() {
+
+}
+
 int main() {
 
 	srand(42);
@@ -153,6 +165,30 @@ int main() {
 	ms += (end.tv_usec - start.tv_usec) / 1000;
 	if (!ms) ms = 1;
 	printf("Optimized backend took %u ms, or %.2f checks per millisecond.\n",
+		ms, (float) urls / ms);
+
+
+
+	gettimeofday(&start, NULL);
+	reg_init();
+	gettimeofday(&end, NULL);
+
+	ms = (end.tv_sec - start.tv_sec) * 1000;
+	ms += (end.tv_usec - start.tv_usec) / 1000;
+	if (!ms) ms = 1;
+	printf("Regex init took %u ms.\n",
+		ms);
+
+
+
+	gettimeofday(&start, NULL);
+	reg();
+	gettimeofday(&end, NULL);
+
+	ms = end.tv_sec - start.tv_sec;
+	ms += (end.tv_usec - start.tv_usec) / 1000;
+	if (!ms) ms = 1;
+	printf("Regex took %u ms, or %.2f checks per millisecond.\n",
 		ms, (float) urls / ms);
 
 	return 0;
