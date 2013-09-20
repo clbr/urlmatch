@@ -23,3 +23,7 @@ int simplematch(const char find[], const char hay[]) {
 	// Easiest path: no wildcards
 	
 }
+
+u32 countwilds(const char str[]) {
+
+}
