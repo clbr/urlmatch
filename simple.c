@@ -28,14 +28,20 @@ int url_simplematch(const char find[], const char hay[]) {
 	}
 
 	const u32 len = strlen(find);
+	const u32 hlen = strlen(hay);
 	u32 i, h = 0;
 
 	for (i = 0; i < len; i++) {
 		if (find[i] != '*') {
 			if (find[i] != hay[h])
 				return 0;
+			h++;
 		} else {
-			
+			if (i == len - 1)
+				return 1;
+
+			// Wildcard, not last
+			const char * const ender = strchrnul(&find[i + 1], '*');
 		}
 	}
 }
