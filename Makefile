@@ -7,7 +7,9 @@ HDR = $(wildcard *.h)
 OBJ = $(SRC:.c=.o)
 NAME = liburlmatch.a
 
-all: $(OBJ)
+all: $(NAME)
+
+$(NAME): $(OBJ)
 	rm -f $(NAME)
 	ar cru $(NAME) $(OBJ)
 	ranlib $(NAME)
