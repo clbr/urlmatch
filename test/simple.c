@@ -29,6 +29,9 @@ int main() {
 	test("*foo", "oof", 0);
 	test("f****f", "fof", 1);
 	test("f****f", "ff", 1);
+	test("**f****f", "ff", 1);
+	test("f****f**", "ff", 1);
+	test("**f****f**", "ff", 1);
 
 	test("*foo*", "foo", 1);
 	test("*foo*", "bfoob", 1);
