@@ -114,7 +114,7 @@ int main() {
 
 	srand(42);
 
-	printf("Generating %u urls and %u rules.\n", urls, rules);
+	printf("Generating %uk urls and %u rules.\n", urls / 1000, rules);
 	gen();
 
 	struct timeval start, end;
