@@ -1,2 +1,3 @@
 *.[oa]
 test/*
+bench/bench
