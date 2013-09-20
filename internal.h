@@ -15,8 +15,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef URLMATCH_H
-#define URLMATCH_H
+#ifndef INTERNAL_H
+#define INTERNAL_H
 
 #include <lrtypes.h>
 
