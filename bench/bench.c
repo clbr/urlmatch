@@ -20,7 +20,22 @@ static char *genrule() {
 	const u32 len = (rand() % 10) + 5;
 	char *buf = calloc(len + 1, 1);
 
-	
+	u32 i;
+	for (i = 0; i < len; i++) {
+		const u32 type = rand() % 3;
+
+		switch (type) {
+			case 0:
+				buf[i] = 'a' + rand() % 26;
+			break;
+			case 1:
+				buf[i] = '0' + rand() % 10;
+			break;
+			case 2:
+				buf[i] = '*';
+			break;
+		}
+	}
 
 	return buf;
 }
