@@ -34,9 +34,24 @@
 
 #endif // GNUC
 
-
+// Returns 1 if haystack matches pattern, 0 otherwise.
 int url_simplematch(const char pattern[], const char haystack[]) WUR_FUNC PURE_FUNC;
 
+/* These two functions initialize the optimized pattern matcher.
+ * _init takes a char array of patterns, one per line.
+ * _init_file takes a filename, either a text file containing one pattern per line,
+ * or an optimized binary file as saved by _save_optimized.
+ *
+ * On error they return NULL. */
+typedef struct urlctx urlctx;
+urlctx *url_init_file(const char file[]) WUR_FUNC;
+urlctx *url_init(const char contents[]) WUR_FUNC;
+
+// Save an optimized binary file for faster loading later.
+int url_save_optimized(const urlctx *ctx, const char file[]) WUR_FUNC;
+
+// Returns 1 if haystack matches pattern, 0 otherwise.
+int url_match(const urlctx *ctx, const char haystack[]) WUR_FUNC PURE_FUNC;
 
 #undef PURE_FUNC
 #undef NORETURN_FUNC
