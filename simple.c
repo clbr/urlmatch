@@ -60,4 +60,14 @@ u32 countwilds(const char str[]) {
 
 const char *strrstr(const char hay[], const char needle[]) {
 
+	const char *next;
+	next = strstr(hay, needle);
+	if (!next) return NULL;
+
+	while (1) {
+		const char *prev = next;
+		next = strstr(next, needle);
+
+		if (!next) return prev;
+	}
 }
