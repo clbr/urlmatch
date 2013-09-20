@@ -9,7 +9,7 @@ NAME = bench
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJ) ../liburlmatch.a
 
 clean:
 	$(MAKE) -C test clean
