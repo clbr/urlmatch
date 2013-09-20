@@ -36,11 +36,11 @@ int url_simplematch(const char find[], const char hay[]) {
 				return 0;
 			h++;
 		} else {
-			if (i == len - 1)
-				return 1;
-
 			// If multiple wildcards in a row, skip to the last
 			while (find[i+1] == '*') i++;
+
+			if (i == len - 1)
+				return 1;
 
 			// Wildcard, not last
 			const char * const ender = strchrnul(&find[i + 1], '*');
