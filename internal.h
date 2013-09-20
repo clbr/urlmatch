@@ -15,11 +15,11 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "urlmatch.h"
-#include "internal.h"
+#ifndef URLMATCH_H
+#define URLMATCH_H
 
-int simplematch(const char find[], const char hay[]) {
+#include <lrtypes.h>
 
-	// Easiest path: no wildcards
-	
-}
+u32 countwilds(const char str[]);
+
+#endif
