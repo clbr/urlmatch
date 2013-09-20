@@ -61,7 +61,10 @@ static char *genrule() {
 
 	u32 i;
 	for (i = 0; i < len; i++) {
-		const u32 type = rand() % 3;
+		u32 type = rand() % 3;
+
+		if (i && type == 2 && buf[i - 1] == '*')
+			type = 1;
 
 		switch (type) {
 			case 0:
