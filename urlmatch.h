@@ -18,6 +18,29 @@
 #ifndef URLMATCH_H
 #define URLMATCH_H
 
+// Let's help the compiler
+#if __GNUC__ >= 4
+
+	#define PURE_FUNC __attribute__ ((pure))
+	#define NORETURN_FUNC __attribute__ ((noreturn))
+	#define CONST_FUNC __attribute__ ((const))
+	#define WUR_FUNC __attribute__ ((warn_unused_result))
+#else // GNUC
+
+	#define PURE_FUNC
+	#define NORETURN_FUNC
+	#define CONST_FUNC
+	#define WUR_FUNC
+
+#endif // GNUC
+
+
 int url_simplematch(const char pattern[], const char haystack[]);
+
+
+#undef PURE_FUNC
+#undef NORETURN_FUNC
+#undef CONST_FUNC
+#undef WUR_FUNC
 
 #endif
