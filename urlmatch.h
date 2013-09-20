@@ -18,6 +18,6 @@
 #ifndef URLMATCH_H
 #define URLMATCH_H
 
-int simplematch(const char pattern[], const char haystack[]);
+int url_simplematch(const char pattern[], const char haystack[]);
 
 #endif

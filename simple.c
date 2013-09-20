@@ -18,13 +18,25 @@
 #include "urlmatch.h"
 #include "internal.h"
 
-int simplematch(const char find[], const char hay[]) {
+int url_simplematch(const char find[], const char hay[]) {
 
 	const u32 wilds = countwilds(find);
 
 	// Easiest path: no wildcards
 	if (!wilds) {
 		return strcmp(find, hay) == 0;
+	}
+
+	const u32 len = strlen(find);
+	u32 i, h = 0;
+
+	for (i = 0; i < len; i++) {
+		if (find[i] != '*') {
+			if (find[i] != hay[h])
+				return 0;
+		} else {
+			
+		}
 	}
 }
 
