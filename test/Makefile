@@ -7,7 +7,7 @@ CPPFLAGS += -I ..
 .PHONY: all clean
 
 all: $(TARGETS)
-	@echo ./run-tests.sh $(TARGETS)
+	@./run-tests.sh $(TARGETS)
 
 $(TARGETS): ../liburlmatch.a
 
