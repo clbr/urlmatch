@@ -23,10 +23,27 @@
 #include <lrtypes.h>
 #include <string.h>
 
+// Let's help the compiler
+#if __GNUC__ >= 4
+
+	#define PURE_FUNC __attribute__ ((pure))
+	#define NORETURN_FUNC __attribute__ ((noreturn))
+	#define CONST_FUNC __attribute__ ((const))
+	#define WUR_FUNC __attribute__ ((warn_unused_result))
+#else // GNUC
+
+	#define PURE_FUNC
+	#define NORETURN_FUNC
+	#define CONST_FUNC
+	#define WUR_FUNC
+
+#endif // GNUC
+
+
 #pragma GCC visibility push(hidden)
 
-u32 countwilds(const char str[]);
-const char *strrstr(const char hay[], const char needle[]);
+u32 countwilds(const char str[]) WUR_FUNC PURE_FUNC;
+const char *strrstr(const char hay[], const char needle[]) WUR_FUNC PURE_FUNC;
 
 #pragma GCC visibility pop
 

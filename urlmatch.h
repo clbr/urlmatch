@@ -35,7 +35,7 @@
 #endif // GNUC
 
 
-int url_simplematch(const char pattern[], const char haystack[]);
+int url_simplematch(const char pattern[], const char haystack[]) WUR_FUNC PURE_FUNC;
 
 
 #undef PURE_FUNC
