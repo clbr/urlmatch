@@ -121,13 +121,24 @@ static void reg_init() {
 
 	u32 totlen = 1, i;
 	for (i = 0; i < rules; i++) {
-		totlen += strlen(ruling[i]) + 1;
+		totlen += strlen(ruling[i]) * 2 + 2;
 	}
 
 	char *tmp = calloc(totlen, 1);
 
 	for (i = 0; i < rules; i++) {
-		strcat(tmp, ruling[i]);
+		u32 j;
+
+		for (j = 0; ruling[i][j]; j++) {
+			if (ruling[i][j] != '*') {
+				const char buffy[2] = { ruling[i][j], '\0' };
+				strcat(tmp, buffy);
+			} else {
+				const char buffy[3] = ".*";
+				strcat(tmp, buffy);
+			}
+		}
+
 		if (i != rules - 1) strcat(tmp, "|");
 	}
 
