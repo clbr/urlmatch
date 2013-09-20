@@ -100,13 +100,17 @@ static void gen() {
 
 static void simple() {
 
-	u32 i, j;
+	u32 i, j, sum = 0;
 	for (i = 0; i < urls; i++) {
 		for (j = 0; j < rules; j++) {
-			if (url_simplematch(ruling[j], urling[i])) break;
+			if (url_simplematch(ruling[j], urling[i])) {
+				sum++;
+				break;
+			}
 		}
 		if (i % 10000 == 0) {printf("."); fflush(stdout);}
 	}
+	printf("Total %u matches\n", sum);
 }
 
 static void opti_init() {
