@@ -39,6 +39,9 @@ int url_simplematch(const char find[], const char hay[]) {
 			if (i == len - 1)
 				return 1;
 
+			// If multiple wildcards in a row, skip to the last
+			while (find[i+1] == '*') i++;
+
 			// Wildcard, not last
 			const char * const ender = strchrnul(&find[i + 1], '*');
 			const u32 dist = ender - &find[i + 1];
