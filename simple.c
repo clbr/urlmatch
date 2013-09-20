@@ -20,8 +20,12 @@
 
 int simplematch(const char find[], const char hay[]) {
 
+	const u32 wilds = countwilds(find);
+
 	// Easiest path: no wildcards
-	
+	if (!wilds) {
+		return strcmp(find, hay) == 0;
+	}
 }
 
 u32 countwilds(const char str[]) {

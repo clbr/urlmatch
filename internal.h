@@ -19,6 +19,7 @@
 #define INTERNAL_H
 
 #include <lrtypes.h>
+#include <string.h>
 
 #pragma GCC visibility push(hidden)
 
