@@ -51,8 +51,16 @@ int url_simplematch(const char find[], const char hay[]) {
 			if (!lastmatch)
 				return 0;
 
-			const u32 move = lastmatch - &hay[h];
-			h += move;
+			// Is backtracking required?
+			const char * const firstmatch = strstr(&hay[h], piece);
+
+			if (firstmatch != lastmatch) {
+				const u32 move = firstmatch - &hay[h];
+				h += move;
+			} else {
+				const u32 move = lastmatch - &hay[h];
+				h += move;
+			}
 		}
 	}
 
