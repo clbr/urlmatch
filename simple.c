@@ -42,6 +42,11 @@ int url_simplematch(const char find[], const char hay[]) {
 
 			// Wildcard, not last
 			const char * const ender = strchrnul(&find[i + 1], '*');
+			const u32 dist = ender - &find[i + 1];
+
+			char piece[dist + 1];
+			memcpy(piece, &find[i + 1], dist);
+			piece[dist] = '\0';
 		}
 	}
 }
