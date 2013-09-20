@@ -28,7 +28,6 @@ int url_simplematch(const char find[], const char hay[]) {
 	}
 
 	const u32 len = strlen(find);
-	const u32 hlen = strlen(hay);
 	u32 i, h = 0;
 
 	for (i = 0; i < len; i++) {
@@ -56,4 +55,6 @@ int url_simplematch(const char find[], const char hay[]) {
 			h += move;
 		}
 	}
+
+	return 1;
 }
