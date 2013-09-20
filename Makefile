@@ -18,5 +18,5 @@ clean:
 	$(MAKE) -C test clean
 	rm -f $(OBJ) $(NAME)
 
-test:
+test: all
 	$(MAKE) -C test
