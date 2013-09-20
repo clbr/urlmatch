@@ -12,7 +12,7 @@ void test(const char hay[], const char needle[], const u32 pos) {
 		return;
 	}
 
-	const u32 tmp = pos - hay;
+	const u32 tmp = ptr - hay;
 	if (tmp != pos)
 		fail("%s in %s, wanted %u got %u\n",
 			needle, hay, pos, tmp);
