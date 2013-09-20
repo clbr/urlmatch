@@ -16,6 +16,7 @@ $(OBJ): $(HDR)
 
 clean:
 	$(MAKE) -C test clean
+	rm -f $(OBJ) $(NAME)
 
 test:
 	$(MAKE) -C test
