@@ -41,6 +41,15 @@ int main() {
 	test("*f*oo", "foof", 0);
 	test("*f*oo", "fff kkk foo", 1);
 
+	test("f*", "foo", 1);
+	test("f*f", "foof", 1);
+	test("f*f", "ffffooffff", 1);
+	test("f*f", "foo", 0);
+	test("fkilla*", "foo", 0);
+	test("fkilla*", "fkillyyy", 0);
+	test("fkilla*", "fkilla", 1);
+	test("fkilla*", "fkillamogfgf", 1);
+
 
 	return 0;
 }
