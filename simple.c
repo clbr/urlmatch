@@ -54,7 +54,8 @@ int url_simplematch(const char find[], const char hay[]) {
 			// Is backtracking required?
 			const char * const firstmatch = strstr(&hay[h], piece);
 
-			if (firstmatch != lastmatch) {
+			// The dist check is to make sure this is not a suffix search
+			if (firstmatch != lastmatch && dist != len - i - 1) {
 				const u32 move = firstmatch - &hay[h];
 				h += move;
 			} else {
@@ -63,6 +64,9 @@ int url_simplematch(const char find[], const char hay[]) {
 			}
 		}
 	}
+
+	// We ran out of needle but not hay
+	if (h != strlen(hay)) return 0;
 
 	return 1;
 }
