@@ -120,6 +120,12 @@ static void reg_init() {
 
 static void reg() {
 
+	u32 i;
+	for (i = 0; i < urls; i++) {
+		regexec(regex, urling[i], 0, NULL, 0);
+
+		if (i % 10000 == 0) {printf("."); fflush(stdout);}
+	}
 }
 
 int main() {
