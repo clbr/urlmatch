@@ -26,4 +26,12 @@ int simplematch(const char find[], const char hay[]) {
 
 u32 countwilds(const char str[]) {
 
+	u32 sum = 0;
+
+	const char *ptr = str;
+	for (; *ptr; ptr++) {
+		if (*ptr == '*') sum++;
+	}
+
+	return sum;
 }
