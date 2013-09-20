@@ -47,6 +47,13 @@ int url_simplematch(const char find[], const char hay[]) {
 			char piece[dist + 1];
 			memcpy(piece, &find[i + 1], dist);
 			piece[dist] = '\0';
+
+			const char * const lastmatch = strrstr(&hay[h], piece);
+			if (!lastmatch)
+				return 0;
+
+			const u32 move = lastmatch - &hay[h];
+			h += move;
 		}
 	}
 }
