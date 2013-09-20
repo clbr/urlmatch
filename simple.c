@@ -66,7 +66,7 @@ const char *strrstr(const char hay[], const char needle[]) {
 
 	while (1) {
 		const char *prev = next;
-		next = strstr(next, needle);
+		next = strstr(next + 1, needle);
 
 		if (!next) return prev;
 	}
