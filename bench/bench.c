@@ -12,11 +12,18 @@ static const char **ruling;
 static const char **urling;
 
 static void gen() {
-
+	ruling = calloc(rules, sizeof(char *));
+	urling = calloc(urls, sizeof(char *));
 }
 
 static void simple() {
 
+	u32 i, j;
+	for (i = 0; i < urls; i++) {
+		for (j = 0; j < rules; j++) {
+			if (url_simplematch(ruling[j], urling[i])) break;
+		}
+	}
 }
 
 static void opti() {
