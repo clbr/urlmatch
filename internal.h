@@ -20,6 +20,10 @@
 
 #include <lrtypes.h>
 
+#pragma GCC visibility push(hidden)
+
 u32 countwilds(const char str[]);
+
+#pragma GCC visibility pop
 
 #endif
