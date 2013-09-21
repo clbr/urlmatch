@@ -18,6 +18,31 @@
 #include "internal.h"
 #include "urlmatch.h"
 
+struct urlctx {
+	struct prefix *pref;
+	u16 count;
+};
+
+struct prefix {
+	struct suffix *suf;
+	u16 count;
+
+	char prefix[6];
+};
+
+struct suffix {
+	struct needle *need;
+	u16 count;
+
+	char suffix[3];
+};
+
+struct needle {
+	const char *needle;
+	u16 len;
+	u16 wilds;
+};
+
 urlctx *url_init_file(const char file[]);
 urlctx *url_init(const char contents[]);
 
