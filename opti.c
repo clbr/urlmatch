@@ -231,6 +231,9 @@ urlctx *url_init(const char contents[]) {
 			if (strcmp(prevsuf, suf)) {
 				out->pref[i].suf[suffixes].count = needles;
 				memcpy(out->pref[i].suf[suffixes].suffix, suf, 3);
+				out->pref[i].suf[suffixes].need = xcalloc(sizeof(struct needle),
+										needles);
+
 				suffixes++;
 				needles = 1;
 			} else {
