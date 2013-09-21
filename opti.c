@@ -300,6 +300,9 @@ urlctx *url_init(const char contents[]) {
 
 	for (i = 0; i < origlines; i++) free(outlines[i]);
 	free(outlines);
+
+	// TODO: unify the nuked paths
+
 	return out;
 }
 
