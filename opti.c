@@ -215,6 +215,27 @@ urlctx *url_init(const char contents[]) {
 
 		out->pref[i].suf = xcalloc(sizeof(struct suffix), suffixes);
 		out->pref[i].count = suffixes;
+
+		// For each suffix, how many needles do we have?
+		suffixes = 0;
+		prevsuf[0] = prevsuf[1] = 0;
+		u32 needles = 0;
+		for (j = 0; j < lines; j++) {
+			const int ret = strncmp(out->pref[i].prefix, outlines[j], 5);
+
+			if (ret > 0) continue;
+			if (ret < 0) break;
+
+			char suf[3];
+			getsuffix(outlines[j], suf);
+			if (strcmp(prevsuf, suf)) {
+				out->pref[i].suf[suffixes].count = needles;
+				memcpy(out->pref[i].suf[suffixes].suffix, suf, 3);
+				suffixes++;
+				needles = 0;
+			}
+			memcpy(prevsuf, suf, 3);
+		}
 	}
 
 	// Post-process: every prefix and suffix with wildcards gets nuked
