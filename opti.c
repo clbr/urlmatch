@@ -65,5 +65,23 @@ int url_match(const urlctx *ctx, const char haystack[]) {
 
 void url_free(urlctx *ctx) {
 
-}
+	u32 p, s, n;
+	for (p = 0; p < ctx->count; p++) {
+		struct prefix * const curpref = &ctx->pref[p];
 
+		for (s = 0; s < curpref->count; s++) {
+			struct suffix * const cursuf = &curpref->suf[s];
+
+			for (n = 0; n < cursuf->count; n++) {
+				free((char *) cursuf->need[n].needle);
+			}
+
+			free(cursuf->need);
+		}
+
+		free(curpref->suf);
+	}
+
+	free(ctx->pref);
+	free(ctx);
+}
