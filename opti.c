@@ -285,11 +285,16 @@ urlctx *url_init(const char contents[]) {
 
 	// Post-process: every prefix and suffix with wildcards gets nuked
 	for (i = 0; i < out->count; i++) {
-		if (countwilds(out->pref[i].prefix))
+		if (countwilds(out->pref[i].prefix)) {
 			out->pref[i].prefix[0] = '*';
+			out->pref[i].prefix[1] = '\0';
+		}
+
 		for (j = 0; j < out->pref[i].count; j++) {
-			if (countwilds(out->pref[i].suf[j].suffix))
+			if (countwilds(out->pref[i].suf[j].suffix)) {
 				out->pref[i].suf[j].suffix[0] = '*';
+				out->pref[i].suf[j].suffix[1] = '\0';
+			}
 		}
 	}
 
