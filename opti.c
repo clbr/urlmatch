@@ -203,8 +203,9 @@ urlctx *url_init(const char contents[]) {
 		char prevsuf[3] = { 0 };
 		for (j = 0; j < lines; j++) {
 			const int ret = strncmp(out->pref[i].prefix, outlines[j], 5);
-			if (ret < 0) continue;
-			if (ret > 0) break;
+
+			if (ret > 0) continue;
+			if (ret < 0) break;
 
 			char suf[3];
 			getsuffix(outlines[j], suf);
