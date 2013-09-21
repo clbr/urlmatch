@@ -202,6 +202,10 @@ urlctx *url_init(const char contents[]) {
 		}
 	}
 
+	// For each prefix, how many suffixes are there?
+
+	// Post-process: every prefix and suffix with wildcards gets nuked
+
 	for (i = 0; i < origlines; i++) free(outlines[i]);
 	free(outlines);
 	return out;
