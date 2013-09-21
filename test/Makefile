@@ -3,6 +3,7 @@ TARGETS = $(SRC:.c=)
 
 CFLAGS += -Wall -Wextra
 CPPFLAGS += -I ..
+LDFLAGS += -lz
 
 .PHONY: all clean
 
