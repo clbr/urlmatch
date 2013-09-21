@@ -43,6 +43,8 @@ struct needle {
 	u16 wilds;
 };
 
+#define MAGIC "um1"
+
 urlctx *url_init_file(const char file[]);
 urlctx *url_init(const char contents[]);
 
