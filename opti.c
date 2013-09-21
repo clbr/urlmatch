@@ -111,7 +111,26 @@ urlctx *url_init_file(const char file[]) {
 }
 
 static int cstrcmp(const void * const p1, const void * const p2) {
-	return strcmp(* (char * const *) p1, * (char * const *) p2);
+
+	const char * const a = * (char * const *) p1;
+	const char * const b = * (char * const *) p2;
+
+	int ret = strncmp(a, b, 5);
+	if (ret) return ret;
+
+	// Secondary sort by the suffix
+	char sufa[3] = { 0 };
+	char sufb[3] = { 0 };
+
+	const u32 alen = strlen(a);
+	const u32 blen = strlen(b);
+
+	sufa[1] = a[alen - 1];
+	sufa[0] = a[alen - 2];
+	sufb[1] = b[blen - 1];
+	sufb[0] = b[blen - 2];
+
+	return strcmp(sufa, sufb);
 }
 
 urlctx *url_init(const char contents[]) {
