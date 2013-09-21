@@ -99,6 +99,22 @@ int url_match(const urlctx * const ctx, const char haystack[]) {
 			if (cursuf->suffix[0] != '*' &&
 				strcmp(suf, cursuf->suffix))
 				continue;
+
+			// OK, we have to test all needles in this suffix.
+			u32 n;
+			const u32 nmax = cursuf->count;
+			for (n = 0; n < nmax; n++) {
+				const struct needle * const curneed = &cursuf->need[n];
+
+				// First: no wildcards
+				if (!curneed->wilds) {
+					// Do the lengths match?
+					if (len != curneed->len)
+						continue;
+				} else {
+					
+				}
+			}
 		}
 	}
 
