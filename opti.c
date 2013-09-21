@@ -99,6 +99,7 @@ int url_save_optimized(const urlctx *ctx, const char file[]) {
 	if (!f) return 1;
 
 	swrite(MAGIC, 3, f);
+	swrite(&len, 4, f);
 	swrite(dest, bound, f);
 
 	free(dest);
