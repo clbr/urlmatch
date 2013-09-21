@@ -53,6 +53,9 @@ int url_save_optimized(const urlctx *ctx, const char file[]) WUR_FUNC;
 // Returns 1 if haystack matches the optimized pattern, 0 otherwise.
 int url_match(const urlctx *ctx, const char haystack[]) WUR_FUNC PURE_FUNC;
 
+// Frees this context.
+void url_free(urlctx *ctx);
+
 #undef PURE_FUNC
 #undef NORETURN_FUNC
 #undef CONST_FUNC
