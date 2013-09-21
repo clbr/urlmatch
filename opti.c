@@ -197,7 +197,7 @@ urlctx *url_init(const char contents[]) {
 	strncpy(out->pref[prefixes].prefix, outlines[0], 5);
 	for (i = 1; i < lines; i++) {
 		if (strncmp(outlines[i - 1], outlines[i], 5)) {
-			strncpy(out->pref[prefixes].prefix, outlines[0], 5);
+			strncpy(out->pref[prefixes].prefix, outlines[i], 5);
 			prefixes++;
 		}
 	}
