@@ -146,7 +146,7 @@ urlctx *url_init(const char contents[]) {
 
 	// Copy each pattern line to its own space, and optimize on the way
 	ptr = contents;
-	u32 i = 0;
+	u32 i = 0, j;
 	while (1) {
 		const char * const end = strchrnul(ptr, '\n');
 		const u32 len = end - ptr;
@@ -203,6 +203,14 @@ urlctx *url_init(const char contents[]) {
 	}
 
 	// For each prefix, how many suffixes are there?
+	for (i = 0; i < out->count; i++) {
+		u32 suffixes = 0;
+		for (j = 0; j < lines; j++) {
+			const int ret = strncmp(out->pref[i].prefix, outlines[j], 5);
+			if (ret < 0) continue;
+			if (ret > 0) break;
+		}
+	}
 
 	// Post-process: every prefix and suffix with wildcards gets nuked
 
