@@ -112,6 +112,14 @@ urlctx *url_init_file(const char file[]) {
 
 urlctx *url_init(const char contents[]) {
 
+	u32 lines = 1;
+	const char *ptr = contents;
+	for (; *ptr; ptr++) {
+		if (*ptr == '\n') lines++;
+	}
+
+	urlctx * const out = calloc(sizeof(urlctx), 1);
+	return out;
 }
 
 int url_save_optimized(const urlctx *ctx, const char file[]) {
