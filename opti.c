@@ -86,10 +86,10 @@ int url_match(const urlctx * const ctx, const char haystack[]) {
 	for (p = 0; p < pmax; p++) {
 		const struct prefix * const curpref = &ctx->pref[p];
 
-		if (curpref->prefix[0] == '*' ||
-			!strcmp(pref, curpref->prefix)) {
-			// This prefix matches.
-		}
+		// Does this prefix match?
+		if (curpref->prefix[0] != '*' &&
+			strcmp(pref, curpref->prefix))
+			continue;
 	}
 
 	return 0;
