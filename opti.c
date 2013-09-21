@@ -200,10 +200,16 @@ urlctx *url_init(const char contents[]) {
 	// For each prefix, how many suffixes are there?
 	for (i = 0; i < out->count; i++) {
 		u32 suffixes = 0;
+		char prevsuf[3] = { 0 };
 		for (j = 0; j < lines; j++) {
 			const int ret = strncmp(out->pref[i].prefix, outlines[j], 5);
 			if (ret < 0) continue;
 			if (ret > 0) break;
+
+			char suf[3];
+			getsuffix(outlines[j], suf);
+			if (strcmp(prevsuf, suf)) suffixes++;
+			memcpy(prevsuf, suf, 3);
 		}
 	}
 
