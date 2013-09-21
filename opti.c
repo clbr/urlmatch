@@ -32,12 +32,12 @@ static urlctx *initbin(FILE * const f, const u32 inlen) {
 	free(src);
 
 	// Cool, unpacked. Read it.
-	urlctx * const out = calloc(sizeof(urlctx), 1);
+	urlctx * const out = xcalloc(sizeof(urlctx), 1);
 
 	memcpy(&out->count, buf, 2);
 	buf += 2;
 
-	out->pref = calloc(sizeof(struct prefix), out->count);
+	out->pref = xcalloc(sizeof(struct prefix), out->count);
 	u32 p, s, n;
 
 	for (p = 0; p < out->count; p++) {
@@ -48,7 +48,7 @@ static urlctx *initbin(FILE * const f, const u32 inlen) {
 		memcpy(curpref->prefix, buf, 6);
 		buf += 6;
 
-		curpref->suf = calloc(sizeof(struct suffix), curpref->count);
+		curpref->suf = xcalloc(sizeof(struct suffix), curpref->count);
 
 		for (s = 0; s < curpref->count; s++) {
 			struct suffix * const cursuf = &curpref->suf[s];
@@ -58,7 +58,7 @@ static urlctx *initbin(FILE * const f, const u32 inlen) {
 			memcpy(cursuf->suffix, buf, 3);
 			buf += 3;
 
-			cursuf->need = calloc(sizeof(struct needle), cursuf->count);
+			cursuf->need = xcalloc(sizeof(struct needle), cursuf->count);
 
 			for (n = 0; n < cursuf->count; n++) {
 				struct needle * const curneed = &cursuf->need[n];
@@ -68,7 +68,7 @@ static urlctx *initbin(FILE * const f, const u32 inlen) {
 				memcpy(&curneed->wilds, buf, 2);
 				buf += 2;
 
-				curneed->needle = calloc(curneed->len + 1, 1);
+				curneed->needle = xcalloc(curneed->len + 1, 1);
 
 				memcpy((char *) curneed->needle, buf, curneed->len + 1);
 				buf += curneed->len + 1;
@@ -118,7 +118,7 @@ urlctx *url_init(const char contents[]) {
 		if (*ptr == '\n') lines++;
 	}
 
-	char **outlines = calloc(lines, sizeof(char *));
+	char **outlines = xcalloc(lines, sizeof(char *));
 
 	// Copy each pattern line to its own space, and optimize on the way
 	ptr = contents;
@@ -131,12 +131,14 @@ urlctx *url_init(const char contents[]) {
 		tmp[len] = '\0';
 		memcpy(tmp, ptr, len);
 
+		outlines[i] = xcalloc(len + 1, 1);
+
 		if (!*end) break;
 		ptr = end + 1;
 		i++;
 	}
 
-	urlctx * const out = calloc(sizeof(urlctx), 1);
+	urlctx * const out = xcalloc(sizeof(urlctx), 1);
 
 	free(outlines);
 	return out;
