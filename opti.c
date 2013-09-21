@@ -131,6 +131,11 @@ urlctx *url_init(const char contents[]) {
 		const char * const end = strchrnul(ptr, '\n');
 		const u32 len = end - ptr;
 
+		if (len < 2) {
+			ptr = end + 1;
+			continue;
+		}
+
 		char tmp[len + 1];
 		tmp[len] = '\0';
 		memcpy(tmp, ptr, len);
