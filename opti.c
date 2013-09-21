@@ -19,8 +19,24 @@
 #include "urlmatch.h"
 #include <zlib.h>
 
-static urlctx *initbin(FILE * const f) {
+static urlctx *initbin(FILE * const f, const u32 inlen) {
 
+	size_t len;
+	sread(&len, sizeof(size_t), f);
+
+	u8 * const src = xcalloc(inlen, 1);
+	u8 * const buf = xcalloc(len, 1);
+
+	sread(src, inlen, f);
+	if (uncompress(buf, &len, src, inlen) != Z_OK) return NULL;
+	free(src);
+
+
+
+	urlctx * const out = calloc(sizeof(urlctx), 1);
+
+	free(buf);
+	return out;
 }
 
 urlctx *url_init_file(const char file[]) {
@@ -39,7 +55,7 @@ urlctx *url_init_file(const char file[]) {
 
 	// Binary format
 	if (!strcmp(buf, MAGIC)) {
-		out = initbin(f, len);
+		out = initbin(f, len - 7);
 	} else { // Text format
 		rewind(f);
 
@@ -100,7 +116,7 @@ int url_save_optimized(const urlctx *ctx, const char file[]) {
 	if (!f) return 1;
 
 	swrite(MAGIC, 3, f);
-	swrite(&len, 4, f);
+	swrite(&len, sizeof(size_t), f);
 	swrite(dest, bound, f);
 
 	free(dest);
