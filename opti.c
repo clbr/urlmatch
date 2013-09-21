@@ -219,7 +219,6 @@ urlctx *url_init(const char contents[]) {
 		// For each suffix, how many needles do we have?
 		suffixes = 0;
 		prevsuf[0] = prevsuf[1] = 0;
-		u32 needles = 1;
 		for (j = 0; j < lines; j++) {
 			const int ret = strncmp(out->pref[i].prefix, outlines[j], 5);
 
@@ -229,17 +228,20 @@ urlctx *url_init(const char contents[]) {
 			char suf[3];
 			getsuffix(outlines[j], suf);
 			if (strcmp(prevsuf, suf)) {
-				out->pref[i].suf[suffixes].count = needles;
+				out->pref[i].suf[suffixes].count = 1;
 				memcpy(out->pref[i].suf[suffixes].suffix, suf, 3);
-				out->pref[i].suf[suffixes].need = xcalloc(sizeof(struct needle),
-										needles);
 
 				suffixes++;
-				needles = 1;
 			} else {
-				needles++;
+				out->pref[i].suf[suffixes].count++;
 			}
 			memcpy(prevsuf, suf, 3);
+		}
+
+		// Allocate the needle counts
+		for (j = 0; j < out->pref[i].count; j++) {
+			out->pref[i].suf[j].need = xcalloc(sizeof(struct needle),
+							out->pref[i].suf[j].count);
 		}
 	}
 
