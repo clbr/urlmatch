@@ -50,6 +50,7 @@ const char *strrstr(const char hay[], const char needle[]) WUR_FUNC PURE_FUNC;
 void *xcalloc(size_t nmemb, size_t size);
 void *xmalloc(size_t size);
 void die(const char s[]) NORETURN_FUNC;
+void swrite(const void *ptr, size_t size, FILE *stream);
 
 
 struct urlctx {

@@ -64,3 +64,10 @@ void die(const char s[]) {
 	fprintf(stderr, "%s\n", s);
 	exit(1);
 }
+
+void swrite(const void * const ptr, const size_t size, FILE * const stream) {
+
+	const size_t ret = fwrite(ptr, size, 1, stream);
+
+	if (ret != 1) die("Failed writing");
+}
