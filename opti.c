@@ -18,12 +18,52 @@
 #include "internal.h"
 #include "urlmatch.h"
 
-urlctx *url_init_file(const char file[]);
-urlctx *url_init(const char contents[]);
+static urlctx *initbin(FILE * const f) {
 
-int url_save_optimized(const urlctx *ctx, const char file[]);
+}
 
-int url_match(const urlctx *ctx, const char haystack[]);
+urlctx *url_init_file(const char file[]) {
 
-void url_free(urlctx *ctx);
+	FILE * const f = fopen(file, "r");
+	if (!f) return NULL;
+
+	char buf[4] = { 0 };
+	fread(buf, 3, 1, f);
+
+	urlctx *out = NULL;
+
+	// Binary format
+	if (!strcmp(buf, MAGIC)) {
+		out = initbin(f);
+	} else { // Text format
+		rewind(f);
+		fseek(f, 0, SEEK_END);
+		const long len = ftell(f);
+		rewind(f);
+
+		char *tmp = xcalloc(len, 1);
+		if (fread(tmp, len, 1, f) != 1) die("Failed reading");
+		out = url_init(tmp);
+		free(tmp);
+	}
+
+	fclose(f);
+	return out;
+}
+
+urlctx *url_init(const char contents[]) {
+
+}
+
+int url_save_optimized(const urlctx *ctx, const char file[]) {
+
+}
+
+int url_match(const urlctx *ctx, const char haystack[]) {
+
+}
+
+void url_free(urlctx *ctx) {
+
+}
 
