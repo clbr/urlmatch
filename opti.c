@@ -118,7 +118,27 @@ urlctx *url_init(const char contents[]) {
 		if (*ptr == '\n') lines++;
 	}
 
+	char **outlines = calloc(lines, sizeof(char *));
+
+	// Copy each pattern line to its own space, and optimize on the way
+	ptr = contents;
+	u32 i = 0;
+	while (1) {
+		const char * const end = strchrnul(ptr, '\n');
+		const u32 len = end - ptr;
+
+		char tmp[len + 1];
+		tmp[len] = '\0';
+		memcpy(tmp, ptr, len);
+
+		if (!*end) break;
+		ptr = end + 1;
+		i++;
+	}
+
 	urlctx * const out = calloc(sizeof(urlctx), 1);
+
+	free(outlines);
 	return out;
 }
 
