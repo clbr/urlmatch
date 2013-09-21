@@ -17,6 +17,7 @@
 
 #include "internal.h"
 #include "urlmatch.h"
+#include <zlib.h>
 
 static urlctx *initbin(FILE * const f) {
 
@@ -57,10 +58,12 @@ urlctx *url_init(const char contents[]) {
 
 int url_save_optimized(const urlctx *ctx, const char file[]) {
 
-	FILE * const f = fopen(file, "w");
+	char *buf;
+	size_t len;
+
+	FILE *f = open_memstream(&buf, &len);
 	if (!f) return 1;
 
-	swrite(MAGIC, 3, f);
 	swrite(&ctx->count, 2, f);
 
 	u32 p, s, n;
@@ -83,6 +86,22 @@ int url_save_optimized(const urlctx *ctx, const char file[]) {
 		}
 	}
 
+	fclose(f);
+
+	// Cool, a buffer. Let's compress it.
+	u64 bound = compressBound(len);
+	u8 *dest = xcalloc(bound, 1);
+	if (compress2(dest, &bound, (u8 *) buf, len, 9) != Z_OK) return 2;
+
+	free(buf);
+
+	f = fopen(file, "w");
+	if (!f) return 1;
+
+	swrite(MAGIC, 3, f);
+	swrite(dest, bound, f);
+
+	free(dest);
 	fclose(f);
 	return 0;
 }
