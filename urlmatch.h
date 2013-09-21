@@ -25,12 +25,14 @@
 	#define NORETURN_FUNC __attribute__ ((noreturn))
 	#define CONST_FUNC __attribute__ ((const))
 	#define WUR_FUNC __attribute__ ((warn_unused_result))
+	#define NONNULL __attribute__ ((nonnull
 #else // GNUC
 
 	#define PURE_FUNC
 	#define NORETURN_FUNC
 	#define CONST_FUNC
 	#define WUR_FUNC
+	#define NONNULL
 
 #endif // GNUC
 
@@ -48,17 +50,18 @@ urlctx *url_init_file(const char file[]) WUR_FUNC;
 urlctx *url_init(const char contents[]) WUR_FUNC;
 
 // Save an optimized binary file for faster loading later.
-int url_save_optimized(const urlctx *ctx, const char file[]) WUR_FUNC;
+int url_save_optimized(const urlctx *ctx, const char file[]) WUR_FUNC NONNULL(1)));
 
 // Returns 1 if haystack matches the optimized pattern, 0 otherwise.
-int url_match(const urlctx *ctx, const char haystack[]) WUR_FUNC PURE_FUNC;
+int url_match(const urlctx *ctx, const char haystack[]) WUR_FUNC PURE_FUNC NONNULL(1)));
 
 // Frees this context.
-void url_free(urlctx *ctx);
+void url_free(urlctx *ctx) NONNULL(1)));
 
 #undef PURE_FUNC
 #undef NORETURN_FUNC
 #undef CONST_FUNC
 #undef WUR_FUNC
+#undef NONNULL
 
 #endif
