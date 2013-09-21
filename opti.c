@@ -185,7 +185,7 @@ urlctx *url_init(const char contents[]) {
 	}
 
 	out->count = prefixes;
-	out->pref = calloc(sizeof(struct prefix), prefixes);
+	out->pref = xcalloc(sizeof(struct prefix), prefixes);
 
 	// Add each prefix
 	prefixes = 1;
@@ -212,6 +212,9 @@ urlctx *url_init(const char contents[]) {
 			if (strcmp(prevsuf, suf)) suffixes++;
 			memcpy(prevsuf, suf, 3);
 		}
+
+		out->pref[i].suf = xcalloc(sizeof(struct suffix), suffixes);
+		out->pref[i].count = suffixes;
 	}
 
 	// Post-process: every prefix and suffix with wildcards gets nuked
