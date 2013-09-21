@@ -71,3 +71,10 @@ void swrite(const void * const ptr, const size_t size, FILE * const stream) {
 
 	if (ret != 1) die("Failed writing");
 }
+
+void sread(void * const ptr, const size_t size, FILE * const stream) {
+
+	const size_t ret = fread(ptr, size, 1, stream);
+
+	if (ret != 1) die("Failed reading");
+}
