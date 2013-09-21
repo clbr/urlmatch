@@ -78,6 +78,8 @@ struct needle {
 	const char *needle;
 	u16 len;
 	u16 wilds;
+	u16 longest;
+	u16 longlen;
 };
 
 #define MAGIC "um1"
