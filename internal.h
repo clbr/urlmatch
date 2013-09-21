@@ -23,6 +23,7 @@
 #include <lrtypes.h>
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 // Let's help the compiler
 #if __GNUC__ >= 4
@@ -46,6 +47,9 @@
 u32 countwilds(const char str[]) WUR_FUNC PURE_FUNC;
 const char *strrstr(const char hay[], const char needle[]) WUR_FUNC PURE_FUNC;
 
+void *xcalloc(size_t nmemb, size_t size);
+void *xmalloc(size_t size);
+void die(const char s[]) NORETURN_FUNC;
 
 
 struct urlctx {

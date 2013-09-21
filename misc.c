@@ -42,3 +42,25 @@ const char *strrstr(const char hay[], const char needle[]) {
 		if (!next) return prev;
 	}
 }
+
+void *xcalloc(size_t nmemb, size_t size) {
+
+	void *tmp = calloc(nmemb, size);
+	if (!tmp) die("Out of memory");
+
+	return tmp;
+}
+
+void *xmalloc(size_t size) {
+
+	void *tmp = malloc(size);
+	if (!tmp) die("Out of memory");
+
+	return tmp;
+}
+
+void die(const char s[]) {
+
+	fprintf(stderr, "%s\n", s);
+	exit(1);
+}
