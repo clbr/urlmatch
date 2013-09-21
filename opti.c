@@ -128,6 +128,10 @@ static int cstrcmp(const void * const p1, const void * const p2) {
 	return strcmp(sufa, sufb);
 }
 
+static void addneedle(struct needle * const to, const char from[]) {
+
+}
+
 urlctx *url_init(const char contents[]) {
 
 	u32 lines = 1;
@@ -242,6 +246,32 @@ urlctx *url_init(const char contents[]) {
 		for (j = 0; j < out->pref[i].count; j++) {
 			out->pref[i].suf[j].need = xcalloc(sizeof(struct needle),
 							out->pref[i].suf[j].count);
+		}
+
+		// For each suffix, save the needles
+		suffixes = 0;
+		prevsuf[0] = prevsuf[1] = 0;
+		for (j = 0; j < lines; j++) {
+			const int ret = strncmp(out->pref[i].prefix, outlines[j], 5);
+
+			if (ret > 0) continue;
+			if (ret < 0) break;
+
+			char suf[3];
+			getsuffix(outlines[j], suf);
+			if (strcmp(prevsuf, suf)) {
+				out->pref[i].suf[suffixes].count = 1;
+				memcpy(out->pref[i].suf[suffixes].suffix, suf, 3);
+				addneedle(&out->pref[i].suf[suffixes].need[0], outlines[j]);
+				suffixes++;
+			} else {
+				out->pref[i].suf[suffixes - 1].count++;
+				addneedle(&out->pref[i].suf[suffixes - 1].need[
+							out->pref[i].suf[suffixes - 
+							1].count - 1],
+						outlines[j]);
+			}
+			memcpy(prevsuf, suf, 3);
 		}
 	}
 
