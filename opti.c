@@ -111,6 +111,8 @@ int url_match(const urlctx * const ctx, const char haystack[]) {
 					// Do the lengths match?
 					if (len != curneed->len)
 						continue;
+					if (!strcmp(haystack, curneed->needle))
+						return 1;
 				} else {
 					
 				}
