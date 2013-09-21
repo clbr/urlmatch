@@ -122,13 +122,8 @@ static int cstrcmp(const void * const p1, const void * const p2) {
 	char sufa[3] = { 0 };
 	char sufb[3] = { 0 };
 
-	const u32 alen = strlen(a);
-	const u32 blen = strlen(b);
-
-	sufa[1] = a[alen - 1];
-	sufa[0] = a[alen - 2];
-	sufb[1] = b[blen - 1];
-	sufb[0] = b[blen - 2];
+	getsuffix(a, sufa);
+	getsuffix(b, sufb);
 
 	return strcmp(sufa, sufb);
 }
