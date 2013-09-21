@@ -159,6 +159,7 @@ urlctx *url_init(const char contents[]) {
 		i++;
 	}
 
+	lines = i + 1;
 	qsort(outlines, lines, sizeof(char *), cstrcmp);
 
 	urlctx * const out = xcalloc(sizeof(urlctx), 1);
