@@ -90,6 +90,16 @@ int url_match(const urlctx * const ctx, const char haystack[]) {
 		if (curpref->prefix[0] != '*' &&
 			strcmp(pref, curpref->prefix))
 			continue;
+
+		const u32 smax = curpref->count;
+		for (s = 0; s < smax; s++) {
+			const struct suffix * const cursuf = &curpref->suf[s];
+
+			// Does this suffix match?
+			if (cursuf->suffix[0] != '*' &&
+				strcmp(suf, cursuf->suffix))
+				continue;
+		}
 	}
 
 	return 0;
