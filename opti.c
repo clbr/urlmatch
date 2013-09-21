@@ -263,9 +263,11 @@ urlctx *url_init(const char contents[]) {
 			char suf[3];
 			getsuffix(outlines[j], suf);
 			if (strcmp(prevsuf, suf)) {
-				curpref->suf[suffixes].count = 1;
-				memcpy(curpref->suf[suffixes].suffix, suf, 3);
-				addneedle(&curpref->suf[suffixes].need[0], outlines[j]);
+				struct suffix * const cursuf = &curpref->suf[suffixes];
+
+				cursuf->count = 1;
+				memcpy(cursuf->suffix, suf, 3);
+				addneedle(&cursuf->need[0], outlines[j]);
 				suffixes++;
 			} else {
 				curpref->suf[suffixes - 1].count++;
