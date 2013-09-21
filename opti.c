@@ -73,8 +73,12 @@ int url_save_optimized(const urlctx *ctx, const char file[]) {
 int url_match(const urlctx *ctx, const char haystack[]) {
 
 	const u32 len = strlen(haystack);
-	char suf[3];
+	char suf[3], pref[6];
 	getsuffix(haystack, suf);
+
+	strncpy(pref, haystack, 5);
+	pref[5] = '\0';
+
 
 	return 0;
 }
