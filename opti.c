@@ -270,11 +270,11 @@ urlctx *url_init(const char contents[]) {
 				addneedle(&cursuf->need[0], outlines[j]);
 				suffixes++;
 			} else {
-				curpref->suf[suffixes - 1].count++;
-				addneedle(&curpref->suf[suffixes - 1].need[
-							curpref->suf[suffixes - 
-							1].count - 1],
+				struct suffix * const cursuf = &curpref->suf[suffixes - 1];
+
+				addneedle(&cursuf->need[cursuf->count],
 						outlines[j]);
+				cursuf->count++;
 			}
 			memcpy(prevsuf, suf, 3);
 		}
