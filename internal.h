@@ -22,6 +22,7 @@
 
 #include <lrtypes.h>
 #include <string.h>
+#include <stdio.h>
 
 // Let's help the compiler
 #if __GNUC__ >= 4
