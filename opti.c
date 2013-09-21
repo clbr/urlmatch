@@ -203,10 +203,13 @@ urlctx *url_init(const char contents[]) {
 
 	// For each prefix, how many suffixes are there?
 	for (i = 0; i < out->count; i++) {
+
+		struct prefix * const curpref = &out->pref[i];
+
 		u32 suffixes = 0;
 		char prevsuf[3] = { 0 };
 		for (j = 0; j < lines; j++) {
-			const int ret = strncmp(out->pref[i].prefix, outlines[j], 5);
+			const int ret = strncmp(curpref->prefix, outlines[j], 5);
 
 			if (ret > 0) continue;
 			if (ret < 0) break;
@@ -217,14 +220,14 @@ urlctx *url_init(const char contents[]) {
 			memcpy(prevsuf, suf, 3);
 		}
 
-		out->pref[i].suf = xcalloc(sizeof(struct suffix), suffixes);
-		out->pref[i].count = suffixes;
+		curpref->suf = xcalloc(sizeof(struct suffix), suffixes);
+		curpref->count = suffixes;
 
 		// For each suffix, how many needles do we have?
 		suffixes = 0;
 		prevsuf[0] = prevsuf[1] = 0;
 		for (j = 0; j < lines; j++) {
-			const int ret = strncmp(out->pref[i].prefix, outlines[j], 5);
+			const int ret = strncmp(curpref->prefix, outlines[j], 5);
 
 			if (ret > 0) continue;
 			if (ret < 0) break;
@@ -232,27 +235,27 @@ urlctx *url_init(const char contents[]) {
 			char suf[3];
 			getsuffix(outlines[j], suf);
 			if (strcmp(prevsuf, suf)) {
-				out->pref[i].suf[suffixes].count = 1;
-				memcpy(out->pref[i].suf[suffixes].suffix, suf, 3);
+				curpref->suf[suffixes].count = 1;
+				memcpy(curpref->suf[suffixes].suffix, suf, 3);
 
 				suffixes++;
 			} else {
-				out->pref[i].suf[suffixes - 1].count++;
+				curpref->suf[suffixes - 1].count++;
 			}
 			memcpy(prevsuf, suf, 3);
 		}
 
 		// Allocate the needle counts
-		for (j = 0; j < out->pref[i].count; j++) {
-			out->pref[i].suf[j].need = xcalloc(sizeof(struct needle),
-							out->pref[i].suf[j].count);
+		for (j = 0; j < curpref->count; j++) {
+			curpref->suf[j].need = xcalloc(sizeof(struct needle),
+							curpref->suf[j].count);
 		}
 
 		// For each suffix, save the needles
 		suffixes = 0;
 		prevsuf[0] = prevsuf[1] = 0;
 		for (j = 0; j < lines; j++) {
-			const int ret = strncmp(out->pref[i].prefix, outlines[j], 5);
+			const int ret = strncmp(curpref->prefix, outlines[j], 5);
 
 			if (ret > 0) continue;
 			if (ret < 0) break;
@@ -260,14 +263,14 @@ urlctx *url_init(const char contents[]) {
 			char suf[3];
 			getsuffix(outlines[j], suf);
 			if (strcmp(prevsuf, suf)) {
-				out->pref[i].suf[suffixes].count = 1;
-				memcpy(out->pref[i].suf[suffixes].suffix, suf, 3);
-				addneedle(&out->pref[i].suf[suffixes].need[0], outlines[j]);
+				curpref->suf[suffixes].count = 1;
+				memcpy(curpref->suf[suffixes].suffix, suf, 3);
+				addneedle(&curpref->suf[suffixes].need[0], outlines[j]);
 				suffixes++;
 			} else {
-				out->pref[i].suf[suffixes - 1].count++;
-				addneedle(&out->pref[i].suf[suffixes - 1].need[
-							out->pref[i].suf[suffixes - 
+				curpref->suf[suffixes - 1].count++;
+				addneedle(&curpref->suf[suffixes - 1].need[
+							curpref->suf[suffixes - 
 							1].count - 1],
 						outlines[j]);
 			}
