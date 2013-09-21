@@ -142,6 +142,7 @@ urlctx *url_init(const char contents[]) {
 	}
 
 	char **outlines = xcalloc(lines, sizeof(char *));
+	const u32 origlines = lines;
 
 	// Copy each pattern line to its own space, and optimize on the way
 	ptr = contents;
@@ -191,6 +192,7 @@ urlctx *url_init(const char contents[]) {
 	out->count = prefixes;
 	out->pref = calloc(sizeof(struct prefix), prefixes);
 
+	for (i = 0; i < origlines; i++) free(outlines[i]);
 	free(outlines);
 	return out;
 }
