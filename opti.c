@@ -165,7 +165,6 @@ urlctx *url_init(const char contents[]) {
 		outlines[i][0] = tmp[0];
 		for (p = 1, o = 1; p < len; p++) {
 			if (tmp[p - 1] == '*' && tmp[p] == '*') {
-				p++;
 				continue;
 			}
 			outlines[i][o] = tmp[p];
