@@ -70,7 +70,7 @@ int url_save_optimized(const urlctx *ctx, const char file[]) {
 	return 0;
 }
 
-int url_match(const urlctx *ctx, const char haystack[]) {
+int url_match(const urlctx * const ctx, const char haystack[]) {
 
 	const u32 len = strlen(haystack);
 	char suf[3], pref[6];
@@ -79,6 +79,18 @@ int url_match(const urlctx *ctx, const char haystack[]) {
 	strncpy(pref, haystack, 5);
 	pref[5] = '\0';
 
+	u32 p, s;
+
+	// Find all applicable prefixes
+	const u32 pmax = ctx->count;
+	for (p = 0; p < pmax; p++) {
+		const struct prefix * const curpref = &ctx->pref[p];
+
+		if (curpref->prefix[0] == '*' ||
+			!strcmp(pref, curpref->prefix)) {
+			// This prefix matches.
+		}
+	}
 
 	return 0;
 }
