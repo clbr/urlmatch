@@ -45,6 +45,36 @@
 u32 countwilds(const char str[]) WUR_FUNC PURE_FUNC;
 const char *strrstr(const char hay[], const char needle[]) WUR_FUNC PURE_FUNC;
 
+
+
+struct urlctx {
+	struct prefix *pref;
+	u16 count;
+};
+
+struct prefix {
+	struct suffix *suf;
+	u16 count;
+
+	char prefix[6];
+};
+
+struct suffix {
+	struct needle *need;
+	u16 count;
+
+	char suffix[3];
+};
+
+struct needle {
+	const char *needle;
+	u16 len;
+	u16 wilds;
+};
+
+#define MAGIC "um1"
+
+
 #pragma GCC visibility pop
 
 #endif
