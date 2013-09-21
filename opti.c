@@ -25,15 +25,56 @@ static urlctx *initbin(FILE * const f, const u32 inlen) {
 	sread(&len, sizeof(size_t), f);
 
 	u8 * const src = xcalloc(inlen, 1);
-	u8 * const buf = xcalloc(len, 1);
+	u8 *buf = xcalloc(len, 1);
 
 	sread(src, inlen, f);
 	if (uncompress(buf, &len, src, inlen) != Z_OK) return NULL;
 	free(src);
 
-
-
+	// Cool, unpacked. Read it.
 	urlctx * const out = calloc(sizeof(urlctx), 1);
+
+	memcpy(&out->count, buf, 2);
+	buf += 2;
+
+	out->pref = calloc(sizeof(struct prefix), out->count);
+	u32 p, s, n;
+
+	for (p = 0; p < out->count; p++) {
+		struct prefix * const curpref = &out->pref[p];
+
+		memcpy(&curpref->count, buf, 2);
+		buf += 2;
+		memcpy(curpref->prefix, buf, 6);
+		buf += 6;
+
+		curpref->suf = calloc(sizeof(struct suffix), curpref->count);
+
+		for (s = 0; s < curpref->count; s++) {
+			struct suffix * const cursuf = &curpref->suf[s];
+
+			memcpy(&cursuf->count, buf, 2);
+			buf += 2;
+			memcpy(cursuf->suffix, buf, 3);
+			buf += 3;
+
+			cursuf->need = calloc(sizeof(struct needle), cursuf->count);
+
+			for (n = 0; n < cursuf->count; n++) {
+				struct needle * const curneed = &cursuf->need[n];
+
+				memcpy(&curneed->len, buf, 2);
+				buf += 2;
+				memcpy(&curneed->wilds, buf, 2);
+				buf += 2;
+
+				curneed->needle = calloc(curneed->len + 1, 1);
+
+				memcpy((char *) curneed->needle, buf, curneed->len + 1);
+				buf += curneed->len + 1;
+			}
+		}
+	}
 
 	free(buf);
 	return out;
