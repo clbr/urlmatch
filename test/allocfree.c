@@ -6,6 +6,7 @@ int main() {
 		"http://moi\n"
 		"https://katti\n"
 		"moido\n"
+		"http://hoi\n"
 		"http://google*";
 
 	urlctx *ctx = url_init(pat);
