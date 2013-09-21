@@ -60,6 +60,29 @@ int url_save_optimized(const urlctx *ctx, const char file[]) {
 	FILE * const f = fopen(file, "w");
 	if (!f) return 1;
 
+	swrite(MAGIC, 3, f);
+	swrite(&ctx->count, 2, f);
+
+	u32 p, s, n;
+	for (p = 0; p < ctx->count; p++) {
+		const struct prefix * const curpref = &ctx->pref[p];
+		swrite(&curpref->count, 2, f);
+		swrite(curpref->prefix, 6, f);
+
+		for (s = 0; s < curpref->count; s++) {
+			const struct suffix * const cursuf = &curpref->suf[s];
+			swrite(&cursuf->count, 2, f);
+			swrite(cursuf->suffix, 3, f);
+
+			for (n = 0; n < cursuf->count; n++) {
+				const struct needle * const curneed = &cursuf->need[n];
+				swrite(&curneed->len, 2, f);
+				swrite(&curneed->wilds, 2, f);
+				swrite(curneed->needle, curneed->len + 1, f);
+			}
+		}
+	}
+
 	fclose(f);
 	return 0;
 }
