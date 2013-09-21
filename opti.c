@@ -192,6 +192,16 @@ urlctx *url_init(const char contents[]) {
 	out->count = prefixes;
 	out->pref = calloc(sizeof(struct prefix), prefixes);
 
+	// Add each prefix
+	prefixes = 0;
+	strncpy(out->pref[prefixes].prefix, outlines[0], 5);
+	for (i = 1; i < lines; i++) {
+		if (strncmp(outlines[i - 1], outlines[i], 5)) {
+			strncpy(out->pref[prefixes].prefix, outlines[0], 5);
+			prefixes++;
+		}
+	}
+
 	for (i = 0; i < origlines; i++) free(outlines[i]);
 	free(outlines);
 	return out;
