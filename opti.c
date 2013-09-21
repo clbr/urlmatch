@@ -182,6 +182,15 @@ urlctx *url_init(const char contents[]) {
 
 	urlctx * const out = xcalloc(sizeof(urlctx), 1);
 
+	// How many prefixes do we have?
+	u32 prefixes = 1;
+	for (i = 1; i < lines; i++) {
+		if (strncmp(outlines[i - 1], outlines[i], 5)) prefixes++;
+	}
+
+	out->count = prefixes;
+	out->pref = calloc(sizeof(struct prefix), prefixes);
+
 	free(outlines);
 	return out;
 }
