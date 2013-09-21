@@ -130,6 +130,9 @@ static int cstrcmp(const void * const p1, const void * const p2) {
 
 static void addneedle(struct needle * const to, const char from[]) {
 
+	to->needle = strdup(from);
+	to->len = strlen(from);
+	to->wilds = countwilds(from);
 }
 
 urlctx *url_init(const char contents[]) {
