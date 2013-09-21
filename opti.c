@@ -233,7 +233,7 @@ urlctx *url_init(const char contents[]) {
 
 				suffixes++;
 			} else {
-				out->pref[i].suf[suffixes].count++;
+				out->pref[i].suf[suffixes - 1].count++;
 			}
 			memcpy(prevsuf, suf, 3);
 		}
