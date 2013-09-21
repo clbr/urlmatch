@@ -28,6 +28,10 @@ urlctx *url_init_file(const char file[]) {
 	FILE * const f = fopen(file, "r");
 	if (!f) return NULL;
 
+	fseek(f, 0, SEEK_END);
+	const long len = ftell(f);
+	rewind(f);
+
 	char buf[4] = { 0 };
 	fread(buf, 3, 1, f);
 
@@ -35,11 +39,8 @@ urlctx *url_init_file(const char file[]) {
 
 	// Binary format
 	if (!strcmp(buf, MAGIC)) {
-		out = initbin(f);
+		out = initbin(f, len);
 	} else { // Text format
-		rewind(f);
-		fseek(f, 0, SEEK_END);
-		const long len = ftell(f);
 		rewind(f);
 
 		char *tmp = xcalloc(len, 1);
