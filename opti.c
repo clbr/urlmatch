@@ -110,6 +110,10 @@ urlctx *url_init_file(const char file[]) {
 	return out;
 }
 
+static int cstrcmp(const void * const p1, const void * const p2) {
+	return strcmp(* (char * const *) p1, * (char * const *) p2);
+}
+
 urlctx *url_init(const char contents[]) {
 
 	u32 lines = 1;
@@ -149,6 +153,8 @@ urlctx *url_init(const char contents[]) {
 		ptr = end + 1;
 		i++;
 	}
+
+	qsort(outlines, lines, sizeof(char *), cstrcmp);
 
 	urlctx * const out = xcalloc(sizeof(urlctx), 1);
 
