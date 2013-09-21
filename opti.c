@@ -57,6 +57,11 @@ urlctx *url_init(const char contents[]) {
 
 int url_save_optimized(const urlctx *ctx, const char file[]) {
 
+	FILE * const f = fopen(file, "w");
+	if (!f) return 1;
+
+	fclose(f);
+	return 0;
 }
 
 int url_match(const urlctx *ctx, const char haystack[]) {
