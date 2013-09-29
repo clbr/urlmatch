@@ -67,6 +67,10 @@ static urlctx *initbin(FILE * const f, const u32 inlen) {
 				buf += 2;
 				memcpy(&curneed->wilds, buf, 2);
 				buf += 2;
+				memcpy(&curneed->longest, buf, 2);
+				buf += 2;
+				memcpy(&curneed->longlen, buf, 2);
+				buf += 2;
 
 				curneed->needle = xcalloc(curneed->len + 1, 1);
 

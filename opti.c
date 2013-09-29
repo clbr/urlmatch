@@ -44,6 +44,8 @@ int url_save_optimized(const urlctx *ctx, const char file[]) {
 				const struct needle * const curneed = &cursuf->need[n];
 				swrite(&curneed->len, 2, f);
 				swrite(&curneed->wilds, 2, f);
+				swrite(&curneed->longest, 2, f);
+				swrite(&curneed->longlen, 2, f);
 				swrite(curneed->needle, curneed->len + 1, f);
 			}
 		}
