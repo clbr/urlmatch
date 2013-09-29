@@ -132,11 +132,17 @@ static int cstrcmp(const void * const p1, const void * const p2) {
 	return strcmp(sufa, sufb);
 }
 
+static void calclongest(const char needle[], u16 * const longest, u16 * const longlen) {
+
+}
+
 static void addneedle(struct needle * const to, const char from[]) {
 
 	to->needle = strdup(from);
 	to->len = strlen(from);
 	to->wilds = countwilds(from);
+
+	calclongest(from, &to->longest, &to->longlen);
 }
 
 urlctx *url_init(const char contents[]) {
