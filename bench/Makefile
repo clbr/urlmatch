@@ -12,5 +12,4 @@ all: $(NAME)
 $(NAME): $(OBJ) ../liburlmatch.a
 
 clean:
-	$(MAKE) -C test clean
 	rm -f $(OBJ) $(NAME)
