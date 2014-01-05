@@ -110,7 +110,7 @@ static void simple() {
 		}
 		if (i % 10000 == 0) {printf("."); fflush(stdout);}
 	}
-	printf("Total %u matches\n", sum);
+	printf("\nTotal %u matches\n", sum);
 }
 
 static urlctx *opti_init() {
@@ -142,7 +142,7 @@ static void opti(const urlctx * const ctx) {
 		}
 		if (i % 10000 == 0) {printf("."); fflush(stdout);}
 	}
-	printf("Total %u matches\n", sum);
+	printf("\nTotal %u matches\n", sum);
 }
 
 static void reg_init() {
