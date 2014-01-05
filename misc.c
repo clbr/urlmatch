@@ -128,3 +128,12 @@ void printctx(const struct urlctx * const ctx) {
 		}
 	}
 }
+
+int wildprefix(const char str[]) {
+
+	u16 len = strlen(str);
+	if (len > 5)
+		len = 5;
+
+	return memchr(str, '*', len) != NULL;
+}
