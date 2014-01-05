@@ -114,6 +114,22 @@ urlctx *url_init_file(const char file[]) {
 	return out;
 }
 
+static int wildpfxcmp(const char a[], const char b[]) {
+
+	const int awild = wildprefix(a);
+	const int bwild = wildprefix(b);
+
+	if (!awild && !bwild) {
+		return strncmp(a, b, 5);
+	} else if (awild && !bwild) {
+		return strncmp("*", b, 5);
+	} else if (!awild && bwild) {
+		return strncmp(a, "*", 5);
+	}
+
+	return 0;
+}
+
 static int cstrcmp(const void * const p1, const void * const p2) {
 
 	const char * const a = * (char * const *) p1;
@@ -122,14 +138,8 @@ static int cstrcmp(const void * const p1, const void * const p2) {
 	const int awild = wildprefix(a);
 	const int bwild = wildprefix(b);
 
-	if (!awild && !bwild) {
-		int ret = strncmp(a, b, 5);
-		if (ret) return ret;
-	} else if (awild && !bwild) {
-		int ret = strncmp("*", b, 5);
-		if (ret) return ret;
-	} else if (!awild && bwild) {
-		int ret = strncmp(a, "*", 5);
+	if (awild || bwild) {
+		int ret = wildpfxcmp(a, b);
 		if (ret) return ret;
 	}
 
