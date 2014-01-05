@@ -46,7 +46,7 @@
 
 u32 countwilds(const char str[]) WUR_FUNC PURE_FUNC;
 const char *strrstr(const char hay[], const char needle[]) WUR_FUNC PURE_FUNC;
-int suffixcmp(const char one[], const char two[]) WUR_FUNC PURE_FUNC;
+static inline int suffixcmp(const char one[], const char two[]) WUR_FUNC PURE_FUNC;
 
 void *xcalloc(size_t nmemb, size_t size);
 void *xmalloc(size_t size);
@@ -54,7 +54,7 @@ void die(const char s[]) NORETURN_FUNC;
 void swrite(const void *ptr, const size_t size, FILE *stream);
 void sread(void *ptr, const size_t size, FILE *stream);
 void getsuffix(const char str[], char suf[3]);
-int wildprefix(const char str[]) WUR_FUNC PURE_FUNC;
+static inline int wildprefix(const char str[]) WUR_FUNC PURE_FUNC;
 
 
 struct urlctx {
@@ -88,6 +88,38 @@ struct needle {
 
 void printctx(const struct urlctx *);
 int ctxcmp(const struct urlctx *, const struct urlctx *);
+
+// Inlines
+
+static inline int wildprefix(const char str[]) {
+
+	u16 len = strlen(str);
+	if (len > 5)
+		len = 5;
+
+	return memchr(str, '*', len) != NULL;
+}
+
+static inline int suffixcmp(const char one[], const char two[]) {
+
+	const u16 len1 = strlen(one);
+	const u16 len2 = strlen(two);
+
+	if (len1 == len2)
+		return strcmp(one, two) != 0;
+
+	if (len1 < len2) {
+		// one is a single byte long
+		if (one[0] == two[1])
+			return 0;
+		return 1;
+	} else {
+		// two is a single byte long
+		if (one[1] == two[0])
+			return 0;
+		return 1;
+	}
+}
 
 #pragma GCC visibility pop
 
