@@ -163,7 +163,7 @@ int ctxcmp(const struct urlctx * const a, const struct urlctx * const b) {
 			if (cursuf->count != curbsuf->count) cmperr("needle count");
 			if (strcmp(cursuf->suffix, curbsuf->suffix)) cmperr("suffix");
 
-			for (n = 0; n < cursuf->count; n++) {
+			for (n = 0; n < nmax; n++) {
 				const struct needle * const curneed = &cursuf->need[n];
 				const struct needle * const curbneed = &curbsuf->need[n];
 
