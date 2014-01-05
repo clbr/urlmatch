@@ -99,7 +99,7 @@ int url_match(const urlctx * const ctx, const char haystack[]) {
 
 			// Does this suffix match?
 			if (cursuf->suffix[0] != '*' &&
-				strcmp(suf, cursuf->suffix))
+				suffixcmp(suf, cursuf->suffix))
 				continue;
 
 			// OK, we have to test all needles in this suffix.

@@ -46,6 +46,7 @@
 
 u32 countwilds(const char str[]) WUR_FUNC PURE_FUNC;
 const char *strrstr(const char hay[], const char needle[]) WUR_FUNC PURE_FUNC;
+int suffixcmp(const char one[], const char two[]) WUR_FUNC PURE_FUNC;
 
 void *xcalloc(size_t nmemb, size_t size);
 void *xmalloc(size_t size);

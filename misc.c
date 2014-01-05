@@ -140,3 +140,24 @@ int wildprefix(const char str[]) {
 
 	return memchr(str, '*', len) != NULL;
 }
+
+int suffixcmp(const char one[], const char two[]) {
+
+	const u16 len1 = strlen(one);
+	const u16 len2 = strlen(two);
+
+	if (len1 == len2)
+		return strcmp(one, two);
+
+	if (len1 < len2) {
+		// one is a single byte long
+		if (one[0] == two[1])
+			return 0;
+		return 1;
+	} else {
+		// two is a single byte long
+		if (one[1] == two[0])
+			return 0;
+		return 1;
+	}
+}
