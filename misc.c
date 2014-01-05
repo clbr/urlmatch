@@ -147,7 +147,7 @@ int suffixcmp(const char one[], const char two[]) {
 	const u16 len2 = strlen(two);
 
 	if (len1 == len2)
-		return strcmp(one, two);
+		return strcmp(one, two) != 0;
 
 	if (len1 < len2) {
 		// one is a single byte long
