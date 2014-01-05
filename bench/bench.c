@@ -204,7 +204,7 @@ int main(int argc, char **argv) {
 	gen();
 
 	struct timeval start, end;
-	u32 ms;
+	u32 ms, us;
 
 	printf("Starting testing.\n\n");
 	gettimeofday(&start, NULL);
@@ -249,9 +249,11 @@ int main(int argc, char **argv) {
 
 	ms = (end.tv_sec - start.tv_sec) * 1000;
 	ms += (end.tv_usec - start.tv_usec) / 1000;
+	us = (end.tv_sec - start.tv_sec) * 1000000;
+	us += (end.tv_usec - start.tv_usec);
 	if (!ms) ms = 1;
-	printf("Optimized init, read from binary file took %u ms.\n",
-		ms);
+	printf("Optimized init, read from binary file took %u ms (%u us).\n",
+		ms, us);
 	unlink(name);
 
 
