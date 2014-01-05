@@ -1,0 +1,38 @@
+URL matcher lib
+===============
+
+This is a small and fast C library duplicating the URL matching
+functionality of Opera.  You might use it to implement ad blocking
+or similar.
+
+Given a list of patterns, such as
+
+----
+*facebook.com/*
+http*google-analytics.*
+http://foo.bat/this-annoying-image.jpeg
+----
+
+you can then match any connection attempt against the whole list,
+getting a yes/no answer back.
+
+Motivation
+----------
+
+One of the main components of Opera, the filtering system, supported
+white- and blacklists with wildcards. It was usable for more than just
+blocking ads, though it handled those well too.
+
+This is one such function that should never be relegated to Javascript
+(like Adblock browser extensions do). The average page makes close to a
+hundred connections, the list is traversed on each connection attempt,
+and common lists reach a few thousand entries.
+
+Turns out there wasn't any existing standalone pattern matching
+library. Regex is too slow (or in glibc's case, taking gigabytes of RAM),
+and wildcard functionality is essential.
+
+A simple function (like those you can find dozens of in the web) is
+included for benchmark comparison purposes. Currently this library is
+~5x faster vs the simple function. This is not quite fast enough, so
+future optimizations will be coming.
