@@ -113,12 +113,36 @@ static void simple() {
 	printf("Total %u matches\n", sum);
 }
 
-static void opti_init() {
+static urlctx *opti_init() {
 
+	u32 totlen = 1, i;
+	for (i = 0; i < rules; i++) {
+		totlen += strlen(ruling[i]) + 2;
+	}
+
+	char *tmp = calloc(totlen, 1);
+
+	for (i = 0; i < rules; i++) {
+		strcat(tmp, ruling[i]);
+		strcat(tmp, "\n");
+	}
+
+	urlctx *ctx = url_init(tmp);
+	free(tmp);
+
+	return ctx;
 }
 
-static void opti() {
+static void opti(const urlctx * const ctx) {
 
+	u32 i, j, sum = 0;
+	for (i = 0; i < urls; i++) {
+		if (url_match(ctx, urling[i])) {
+			sum++;
+		}
+		if (i % 10000 == 0) {printf("."); fflush(stdout);}
+	}
+	printf("Total %u matches\n", sum);
 }
 
 static void reg_init() {
@@ -191,7 +215,7 @@ int main() {
 
 
 	gettimeofday(&start, NULL);
-	opti_init();
+	urlctx * const ctx = opti_init();
 	gettimeofday(&end, NULL);
 
 	ms = (end.tv_sec - start.tv_sec) * 1000;
@@ -203,8 +227,9 @@ int main() {
 
 
 	gettimeofday(&start, NULL);
-	opti();
+	opti(ctx);
 	gettimeofday(&end, NULL);
+	url_free(ctx);
 
 	ms = end.tv_sec - start.tv_sec;
 	ms += (end.tv_usec - start.tv_usec) / 1000;
