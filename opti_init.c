@@ -122,8 +122,14 @@ static int cstrcmp(const void * const p1, const void * const p2) {
 	const int awild = wildprefix(a);
 	const int bwild = wildprefix(b);
 
-	if (!awild || !bwild) {
+	if (!awild && !bwild) {
 		int ret = strncmp(a, b, 5);
+		if (ret) return ret;
+	} else if (awild && !bwild) {
+		int ret = strncmp("*", b, 5);
+		if (ret) return ret;
+	} else if (!awild && bwild) {
+		int ret = strncmp(a, "*", 5);
 		if (ret) return ret;
 	}
 
