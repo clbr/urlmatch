@@ -169,7 +169,8 @@ int url_match(const urlctx * const ctx, const char haystack[]) {
 						return 1;
 				} else {
 					// Is the longest streak in it?
-					if (!memmem(haystack, len,
+					if (curneed->longlen > 1 &&
+						!memmem(haystack, len,
 						curneed->needle + curneed->longest,
 						curneed->longlen))
 						continue;
