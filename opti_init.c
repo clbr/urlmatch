@@ -132,7 +132,8 @@ static int cstrcmp(const void * const p1, const void * const p2) {
 	return strcmp(sufa, sufb);
 }
 
-static void calclongest(const char needle[], u16 * const longest, u16 * const longlen) {
+static void calclongest(const char needle[], const u16 len, const u16 wilds,
+			u16 * const longest, u16 * const longlen) {
 
 }
 
@@ -143,7 +144,7 @@ static void addneedle(struct needle * const to, const char from[]) {
 	to->wilds = countwilds(from);
 
 	if (to->wilds)
-		calclongest(from, &to->longest, &to->longlen);
+		calclongest(from, to->len, to->wilds, &to->longest, &to->longlen);
 }
 
 static void unifypref(urlctx * const ctx, const u32 max) {
