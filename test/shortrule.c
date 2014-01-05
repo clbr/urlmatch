@@ -1,4 +1,5 @@
 #include "test.h"
+#include "internal.h"
 
 int main() {
 
