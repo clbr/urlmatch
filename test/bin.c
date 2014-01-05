@@ -29,5 +29,6 @@ int main() {
 	if (ctxcmp(ctx, tmp)) fail("compare failed\n");
 
 	url_free(ctx);
+	url_free(tmp);
 	return 0;
 }
