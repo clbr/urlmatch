@@ -11,6 +11,7 @@ NAME = bench
 all: $(NAME)
 
 $(NAME): $(OBJ) ../liburlmatch.a
+	$(CC) -o $(NAME) $(OBJ) $(CFLAGS) $(LDFLAGS) ../liburlmatch.a
 
 clean:
 	rm -f $(OBJ) $(NAME)
