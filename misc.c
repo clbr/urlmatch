@@ -106,13 +106,13 @@ void printctx(const struct urlctx * const ctx) {
 		const struct prefix * const curpref = &ctx->pref[p];
 
 		smax = curpref->count;
-		printf("\tPrefix %u: %s has %u suffixes\n", p, curpref->prefix, smax);
+		printf("\tPrefix %u '%s' has %u suffixes\n", p, curpref->prefix, smax);
 
 		for (s = 0; s < smax; s++) {
 			const struct suffix * const cursuf = &curpref->suf[s];
 
 			nmax = cursuf->count;
-			printf("\t\tSuffix %u: %s has %u needles\n", s, cursuf->suffix,
+			printf("\t\tSuffix %u '%s' has %u needles\n", s, cursuf->suffix,
 					nmax);
 
 			for (n = 0; n < cursuf->count; n++) {
