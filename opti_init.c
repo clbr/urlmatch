@@ -26,6 +26,7 @@ static urlctx *initbin(FILE * const f, const u32 inlen) {
 
 	u8 * const src = xcalloc(inlen, 1);
 	u8 *buf = xcalloc(len, 1);
+	u8 * const origbuf = buf;
 
 	sread(src, inlen, f);
 	if (uncompress(buf, &len, src, inlen) != Z_OK) return NULL;
@@ -80,7 +81,7 @@ static urlctx *initbin(FILE * const f, const u32 inlen) {
 		}
 	}
 
-	free(buf);
+	free(origbuf);
 	return out;
 }
 
