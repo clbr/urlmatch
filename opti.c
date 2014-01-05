@@ -72,6 +72,58 @@ int url_save_optimized(const urlctx *ctx, const char file[]) {
 	return 0;
 }
 
+static int finalcheck(const char find[], const u32 len,
+			const char hay[], const u32 haylen) {
+
+	// This is the core of the simple check
+
+	u32 i, h = 0;
+
+	for (i = 0; i < len; i++) {
+		if (find[i] != '*') {
+			if (find[i] != hay[h])
+				return 0;
+			h++;
+		} else {
+			// If multiple wildcards in a row, skip to the last
+			while (find[i+1] == '*') i++;
+
+			if (i == len - 1)
+				return 1;
+
+			// Wildcard, not last
+			const char * const ender = strchrnul(&find[i + 1], '*');
+			const u32 dist = ender - &find[i + 1];
+
+			char piece[dist + 1];
+			memcpy(piece, &find[i + 1], dist);
+			piece[dist] = '\0';
+
+			const char * const lastmatch = strrstr(&hay[h], piece);
+			if (!lastmatch)
+				return 0;
+
+			// Is backtracking required?
+			const char * const firstmatch = strstr(&hay[h], piece);
+
+			// The dist check is to make sure this is not a suffix search
+			if (firstmatch != lastmatch && dist != len - i - 1) {
+				const u32 move = firstmatch - &hay[h];
+				h += move;
+			} else {
+				const u32 move = lastmatch - &hay[h];
+				h += move;
+			}
+		}
+	}
+
+	// We ran out of needle but not hay
+	if (h != haylen) return 0;
+
+	return 1;
+
+}
+
 int url_match(const urlctx * const ctx, const char haystack[]) {
 
 	const u32 len = strlen(haystack);
@@ -121,6 +173,12 @@ int url_match(const urlctx * const ctx, const char haystack[]) {
 						curneed->needle + curneed->longest,
 						curneed->longlen))
 						continue;
+
+					// The prefix and suffix match, and it contains
+					// the longest streak. Do the actual comparison.
+					if (finalcheck(curneed->needle, curneed->len,
+						haystack, len))
+						return 1;
 				}
 			}
 		}
