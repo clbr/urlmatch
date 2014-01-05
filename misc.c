@@ -82,6 +82,9 @@ void sread(void * const ptr, const size_t size, FILE * const stream) {
 void getsuffix(const char str[], char suf[3]) {
 
 	const u32 len = strlen(str);
+	if (len == 0)
+		return;
+
 	if (len == 1) {
 		suf[0] = str[0];
 		suf[1] = '\0';
