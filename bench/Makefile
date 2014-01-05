@@ -2,6 +2,7 @@
 
 CFLAGS += -Wall -Wextra
 CPPFLAGS += -I ..
+LDFLAGS += -lz
 
 SRC = $(wildcard *.c)
 OBJ = $(SRC:.c=.o)
