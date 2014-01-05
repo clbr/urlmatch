@@ -116,7 +116,11 @@ int url_match(const urlctx * const ctx, const char haystack[]) {
 					if (!strcmp(haystack, curneed->needle))
 						return 1;
 				} else {
-					
+					// Is the longest streak in it?
+					if (!memmem(haystack, len,
+						curneed->needle + curneed->longest,
+						curneed->longlen))
+						continue;
 				}
 			}
 		}
