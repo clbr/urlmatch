@@ -91,6 +91,11 @@ void getsuffix(const char str[], char suf[3]) {
 	suf[0] = str[len - 2];
 	suf[1] = str[len - 1];
 	suf[2] = '\0';
+
+	if (suf[0] == '*' || suf[1] == '*') {
+		suf[0] = '*';
+		suf[1] = '\0';
+	}
 }
 
 void printctx(const struct urlctx * const ctx) {
