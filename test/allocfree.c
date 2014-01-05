@@ -22,5 +22,15 @@ int main() {
 	ctx = url_init(pat2);
 	url_free(ctx);
 
+	const char pat3[] =
+		"http://moi\n"
+		"https://katti\n"
+		"moido\n"
+		"http://hoi\n"
+		"http://google*\n\n";
+
+	ctx = url_init(pat3);
+	url_free(ctx);
+
 	return 0;
 }
