@@ -2,11 +2,11 @@
 #include <stdlib.h>
 #include <sys/time.h>
 #include <time.h>
-#include <lrtypes.h>
 #include <string.h>
 #include <sys/types.h>
 #include <regex.h>
 #include "urlmatch.h"
+#include "lrtypes.h"
 
 static const u32 urls = 1000 * 1000;
 static const u32 rules = 1500;

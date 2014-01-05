@@ -20,7 +20,7 @@
 
 #define _GNU_SOURCE
 
-#include <lrtypes.h>
+#include "lrtypes.h"
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
