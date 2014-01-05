@@ -202,7 +202,7 @@ urlctx *url_init(const char contents[]) {
 		const char * const end = strchrnul(ptr, '\n');
 		const u32 len = end - ptr;
 
-		if (len < 2) {
+		if (len < 1) {
 			ptr = end + 1;
 			if (ptr >= endbyte) { i--; break; }
 			continue;
