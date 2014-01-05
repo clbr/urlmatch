@@ -1,5 +1,6 @@
 #include "test.h"
 #include "internal.h"
+#include <unistd.h>
 
 int main() {
 
@@ -30,5 +31,6 @@ int main() {
 
 	url_free(ctx);
 	url_free(tmp);
+	unlink(name);
 	return 0;
 }
