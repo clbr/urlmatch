@@ -33,12 +33,12 @@ int url_save_optimized(const urlctx *ctx, const char file[]) {
 	for (p = 0; p < ctx->count; p++) {
 		const struct prefix * const curpref = &ctx->pref[p];
 		swrite(&curpref->count, 2, f);
-		swrite(curpref->prefix, 6, f);
+		swrite(curpref->prefix, 5, f);
 
 		for (s = 0; s < curpref->count; s++) {
 			const struct suffix * const cursuf = &curpref->suf[s];
 			swrite(&cursuf->count, 2, f);
-			swrite(cursuf->suffix, 3, f);
+			swrite(cursuf->suffix, 2, f);
 
 			for (n = 0; n < cursuf->count; n++) {
 				const struct needle * const curneed = &cursuf->need[n];

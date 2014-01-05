@@ -45,8 +45,8 @@ static urlctx *initbin(FILE * const f, const u32 inlen) {
 
 		memcpy(&curpref->count, buf, 2);
 		buf += 2;
-		memcpy(curpref->prefix, buf, 6);
-		buf += 6;
+		memcpy(curpref->prefix, buf, 5);
+		buf += 5;
 
 		curpref->suf = xcalloc(sizeof(struct suffix), curpref->count);
 
@@ -55,8 +55,8 @@ static urlctx *initbin(FILE * const f, const u32 inlen) {
 
 			memcpy(&cursuf->count, buf, 2);
 			buf += 2;
-			memcpy(cursuf->suffix, buf, 3);
-			buf += 3;
+			memcpy(cursuf->suffix, buf, 2);
+			buf += 2;
 
 			cursuf->need = xcalloc(sizeof(struct needle), cursuf->count);
 
