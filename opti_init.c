@@ -149,7 +149,25 @@ static void calclongest(const char needle[], const u16 len, const u16 wilds,
 			*longest = 0;
 		}
 	} else {
-		
+		u16 max = 0;
+		u16 maxlen = 0;
+
+		const char *ptr = needle;
+		while (*ptr) {
+			const char * const next = strchrnul(ptr, '*');
+			const u16 thislen = next - ptr;
+
+			if (maxlen < thislen) {
+				maxlen = thislen;
+				max = ptr - needle;
+			}
+
+			if (!*next) break;
+			ptr = next + 1;
+		}
+
+		*longest = max;
+		*longlen = maxlen;
 	}
 }
 
