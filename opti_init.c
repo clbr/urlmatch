@@ -273,8 +273,7 @@ urlctx *url_init(const char contents[]) {
 		out->pref[0].prefix[0] = '*';
 	}
 	for (i = 1; i < lines; i++) {
-		if (strncmp(outlines[i - 1], outlines[i], 5) &&
-			(!wildprefix(outlines[i - 1]) || !wildprefix(outlines[i]))) {
+		if (wildpfxcmp(outlines[i - 1], outlines[i])) {
 			strncpy(out->pref[prefixes].prefix, outlines[i], 5);
 
 			if (wildprefix(out->pref[prefixes].prefix)) {
@@ -294,12 +293,10 @@ urlctx *url_init(const char contents[]) {
 		u32 suffixes = 0;
 		char prevsuf[3] = { 0 };
 		for (j = 0; j < lines; j++) {
-			const int ret = strncmp(curpref->prefix, outlines[j], 5);
+			const int ret = wildpfxcmp(curpref->prefix, outlines[j]);
 
-			if (!wildprefix(curpref->prefix) || !wildprefix(outlines[j])) {
-				if (ret > 0) continue;
-				if (ret < 0) break;
-			}
+			if (ret > 0) continue;
+			if (ret < 0) break;
 
 			char suf[3];
 			getsuffix(outlines[j], suf);
@@ -314,12 +311,10 @@ urlctx *url_init(const char contents[]) {
 		suffixes = 0;
 		prevsuf[0] = prevsuf[1] = 0;
 		for (j = 0; j < lines; j++) {
-			const int ret = strncmp(curpref->prefix, outlines[j], 5);
+			const int ret = wildpfxcmp(curpref->prefix, outlines[j]);
 
-			if (!wildprefix(curpref->prefix) || !wildprefix(outlines[j])) {
-				if (ret > 0) continue;
-				if (ret < 0) break;
-			}
+			if (ret > 0) continue;
+			if (ret < 0) break;
 
 			char suf[3];
 			getsuffix(outlines[j], suf);
@@ -344,12 +339,10 @@ urlctx *url_init(const char contents[]) {
 		suffixes = 0;
 		prevsuf[0] = prevsuf[1] = 0;
 		for (j = 0; j < lines; j++) {
-			const int ret = strncmp(curpref->prefix, outlines[j], 5);
+			const int ret = wildpfxcmp(curpref->prefix, outlines[j]);
 
-			if (!wildprefix(curpref->prefix) || !wildprefix(outlines[j])) {
-				if (ret > 0) continue;
-				if (ret < 0) break;
-			}
+			if (ret > 0) continue;
+			if (ret < 0) break;
 
 			char suf[3];
 			getsuffix(outlines[j], suf);
