@@ -131,6 +131,15 @@ static int wildpfxcmp(const char a[], const char b[]) {
 	return 0;
 }
 
+static void preparepfx(char str[]) {
+
+	if (!wildprefix(str))
+		return;
+
+	memset(str + 1, '\0', 4);
+	str[0] = '*';
+}
+
 static int cstrcmp(const void * const p1, const void * const p2) {
 
 	const char * const a = * (char * const *) p1;
@@ -264,18 +273,12 @@ urlctx *url_init(const char contents[]) {
 	// Add each prefix
 	prefixes = 1;
 	strncpy(out->pref[0].prefix, outlines[0], 5);
-	if (wildprefix(out->pref[0].prefix)) {
-		memset(out->pref[0].prefix, '\0', 5);
-		out->pref[0].prefix[0] = '*';
-	}
+	preparepfx(out->pref[0].prefix);
 	for (i = 1; i < lines; i++) {
 		if (wildpfxcmp(outlines[i - 1], outlines[i])) {
 			strncpy(out->pref[prefixes].prefix, outlines[i], 5);
 
-			if (wildprefix(out->pref[prefixes].prefix)) {
-				memset(out->pref[prefixes].prefix, '\0', 5);
-				out->pref[prefixes].prefix[0] = '*';
-			}
+			preparepfx(out->pref[prefixes].prefix);
 
 			prefixes++;
 		}
