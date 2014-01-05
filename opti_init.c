@@ -360,9 +360,9 @@ urlctx *url_init(const char contents[]) {
 	for (i = 0; i < origlines; i++) free(outlines[i]);
 	free(outlines);
 
-	if (nukedpref)
+	if (nukedpref > 1)
 		unifypref(out, nukedpref);
-	if (nukedsuf)
+	if (nukedsuf > 1)
 		unifysuf(out, nukedsuf);
 
 	return out;
