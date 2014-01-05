@@ -193,6 +193,7 @@ urlctx *url_init(const char contents[]) {
 
 	u32 lines = 1;
 	const char *ptr = contents;
+	const char * const endbyte = ptr + strlen(contents);
 	for (; *ptr; ptr++) {
 		if (*ptr == '\n') lines++;
 	}
@@ -209,6 +210,7 @@ urlctx *url_init(const char contents[]) {
 
 		if (len < 2) {
 			ptr = end + 1;
+			if (ptr >= endbyte) { i--; break; }
 			continue;
 		}
 
