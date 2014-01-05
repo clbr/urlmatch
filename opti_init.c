@@ -181,14 +181,6 @@ static void addneedle(struct needle * const to, const char from[]) {
 		calclongest(from, to->len, to->wilds, &to->longest, &to->longlen);
 }
 
-static void unifypref(urlctx * const ctx, const u32 max) {
-
-}
-
-static void unifysuf(urlctx * const ctx, const u32 max) {
-
-}
-
 urlctx *url_init(const char contents[]) {
 
 	u32 lines = 1;
@@ -339,31 +331,8 @@ urlctx *url_init(const char contents[]) {
 		}
 	}
 
-	// Post-process: every prefix and suffix with wildcards gets nuked
-	u32 nukedpref = 0, nukedsuf = 0;
-	for (i = 0; i < out->count; i++) {
-		if (countwilds(out->pref[i].prefix)) {
-			out->pref[i].prefix[0] = '*';
-			out->pref[i].prefix[1] = '\0';
-			nukedpref++;
-		}
-
-		for (j = 0; j < out->pref[i].count; j++) {
-			if (countwilds(out->pref[i].suf[j].suffix)) {
-				out->pref[i].suf[j].suffix[0] = '*';
-				out->pref[i].suf[j].suffix[1] = '\0';
-				nukedsuf++;
-			}
-		}
-	}
-
 	for (i = 0; i < origlines; i++) free(outlines[i]);
 	free(outlines);
-
-	if (nukedpref > 1)
-		unifypref(out, nukedpref);
-	if (nukedsuf > 1)
-		unifysuf(out, nukedsuf);
 
 	return out;
 }
