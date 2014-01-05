@@ -231,7 +231,7 @@ int main() {
 	gettimeofday(&end, NULL);
 	url_free(ctx);
 
-	ms = end.tv_sec - start.tv_sec;
+	ms = (end.tv_sec - start.tv_sec) * 1000;
 	ms += (end.tv_usec - start.tv_usec) / 1000;
 	if (!ms) ms = 1;
 	printf("Optimized backend took %u ms, or %.2f checks per millisecond.\n\n",
