@@ -102,8 +102,8 @@ static inline int wildprefix(const char str[]) {
 
 static inline int suffixcmp(const char one[], const char two[]) {
 
-	const u16 len1 = strlen(one);
-	const u16 len2 = strlen(two);
+	const u16 len1 = one[1] ? 2 : 1;
+	const u16 len2 = two[1] ? 2 : 1;
 
 	if (len1 == len2)
 		return strcmp(one, two) != 0;
