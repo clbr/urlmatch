@@ -135,13 +135,8 @@ static int cstrcmp(const void * const p1, const void * const p2) {
 	const char * const a = * (char * const *) p1;
 	const char * const b = * (char * const *) p2;
 
-	const int awild = wildprefix(a);
-	const int bwild = wildprefix(b);
-
-	if (awild || bwild) {
-		int ret = wildpfxcmp(a, b);
-		if (ret) return ret;
-	}
+	int ret = wildpfxcmp(a, b);
+	if (ret) return ret;
 
 	// Secondary sort by the suffix
 	char sufa[3] = { 0 };
