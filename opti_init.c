@@ -100,7 +100,7 @@ urlctx *url_init_file(const char file[]) {
 
 	// Binary format
 	if (!strcmp(buf, MAGIC)) {
-		out = initbin(f, len - 7);
+		out = initbin(f, len - 3 - sizeof(size_t));
 	} else { // Text format
 		rewind(f);
 
