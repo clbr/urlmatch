@@ -26,7 +26,7 @@ int main() {
 	}
 	tmp = url_init_file(name);
 
-	if (contextcmp(ctx, tmp)) fail("compare failed\n");
+	if (ctxcmp(ctx, tmp)) fail("compare failed\n");
 
 	url_free(ctx);
 	return 0;

@@ -164,3 +164,54 @@ int suffixcmp(const char one[], const char two[]) {
 		return 1;
 	}
 }
+
+int ctxcmp(const struct urlctx * const a, const struct urlctx * const b) {
+
+	u16 p, s, n;
+	u16 pmax, smax, nmax;
+
+	pmax = a->count;
+
+
+#define cmperr(ack) do { fprintf(stderr, ack "\n"); return 1; } while (0)
+
+	if (a->count != b->count) cmperr("prefix count");
+
+	for (p = 0; p < pmax; p++) {
+		const struct prefix * const curpref = &a->pref[p];
+		const struct prefix * const curbpref = &b->pref[p];
+
+		smax = curpref->count;
+		if (curpref->count != curbpref->count) cmperr("suffix count");
+		if (strcmp(curpref->prefix, curbpref->prefix)) cmperr("prefix");
+
+		for (s = 0; s < smax; s++) {
+			const struct suffix * const cursuf = &curpref->suf[s];
+			const struct suffix * const curbsuf = &curbpref->suf[s];
+
+			nmax = cursuf->count;
+			if (cursuf->count != curbsuf->count) cmperr("needle count");
+			if (strcmp(cursuf->suffix, curbsuf->suffix)) cmperr("suffix");
+
+			for (n = 0; n < cursuf->count; n++) {
+				const struct needle * const curneed = &cursuf->need[n];
+				const struct needle * const curbneed = &curbsuf->need[n];
+
+				if (curneed->len != curbneed->len)
+					cmperr("needle len");
+				if (curneed->wilds != curbneed->wilds)
+					cmperr("needle wilds");
+				if (curneed->longest != curbneed->longest)
+					cmperr("needle longest");
+				if (curneed->longlen != curbneed->longlen)
+					cmperr("needle longlen");
+				if (strcmp(curneed->needle, curbneed->needle))
+					cmperr("needle");
+			}
+		}
+	}
+
+#undef cmperr
+
+	return 0;
+}
