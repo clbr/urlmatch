@@ -8,7 +8,7 @@
 #include "urlmatch.h"
 #include "lrtypes.h"
 
-static const u32 urls = 1000 * 1000;
+static u32 urls = 1000 * 1000;
 static const u32 rules = 1500;
 
 static const char **ruling;
@@ -135,7 +135,7 @@ static urlctx *opti_init() {
 
 static void opti(const urlctx * const ctx) {
 
-	u32 i, j, sum = 0;
+	u32 i, sum = 0;
 	for (i = 0; i < urls; i++) {
 		if (url_match(ctx, urling[i])) {
 			sum++;
@@ -191,7 +191,11 @@ static void reg() {
 	}
 }
 
-int main() {
+int main(int argc, char **argv) {
+
+	if (argc > 1) {
+		urls = 1000 * atoi(argv[1]);
+	}
 
 	srand(42);
 
