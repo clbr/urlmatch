@@ -135,6 +135,22 @@ static int cstrcmp(const void * const p1, const void * const p2) {
 static void calclongest(const char needle[], const u16 len, const u16 wilds,
 			u16 * const longest, u16 * const longlen) {
 
+	// Easy path
+	if (wilds == 1) {
+		const char *ptr = strchr(needle, '*');
+		const u16 pos = ptr - needle;
+		const u16 half = len / 2;
+
+		if (pos < half) {
+			*longlen = len - pos - 1;
+			*longest = pos + 1;
+		} else {
+			*longlen = pos;
+			*longest = 0;
+		}
+	} else {
+		
+	}
 }
 
 static void addneedle(struct needle * const to, const char from[]) {
