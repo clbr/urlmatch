@@ -54,7 +54,7 @@ void die(const char s[]) NORETURN_FUNC;
 void swrite(const void *ptr, const size_t size, FILE *stream);
 void sread(void *ptr, const size_t size, FILE *stream);
 void getsuffix(const char str[], char suf[3]);
-int wildprefix(const char str[]);
+int wildprefix(const char str[]) WUR_FUNC PURE_FUNC;
 
 
 struct urlctx {
