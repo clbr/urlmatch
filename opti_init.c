@@ -142,7 +142,8 @@ static void addneedle(struct needle * const to, const char from[]) {
 	to->len = strlen(from);
 	to->wilds = countwilds(from);
 
-	calclongest(from, &to->longest, &to->longlen);
+	if (to->wilds)
+		calclongest(from, &to->longest, &to->longlen);
 }
 
 static void unifypref(urlctx * const ctx, const u32 max) {
