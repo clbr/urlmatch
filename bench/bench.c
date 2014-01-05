@@ -5,6 +5,7 @@
 #include <string.h>
 #include <sys/types.h>
 #include <regex.h>
+#include <unistd.h>
 #include "urlmatch.h"
 #include "lrtypes.h"
 
@@ -219,7 +220,7 @@ int main(int argc, char **argv) {
 
 
 	gettimeofday(&start, NULL);
-	urlctx * const ctx = opti_init();
+	urlctx * ctx = opti_init();
 	gettimeofday(&end, NULL);
 
 	ms = (end.tv_sec - start.tv_sec) * 1000;
@@ -227,6 +228,31 @@ int main(int argc, char **argv) {
 	if (!ms) ms = 1;
 	printf("Optimized init took %u ms.\n",
 		ms);
+
+	// Yes yes, insecure mktemp. This is a bench.
+	char name[] = "/tmp/urlmatch_benchXXXXXX";
+	mktemp(name);
+	gettimeofday(&start, NULL);
+	if (url_save_optimized(ctx, name)) puts("save failed");
+	gettimeofday(&end, NULL);
+	url_free(ctx);
+
+	ms = (end.tv_sec - start.tv_sec) * 1000;
+	ms += (end.tv_usec - start.tv_usec) / 1000;
+	if (!ms) ms = 1;
+	printf("Optimized init, saving to binary file took %u ms.\n",
+		ms);
+
+	gettimeofday(&start, NULL);
+	ctx = url_init_file(name);
+	gettimeofday(&end, NULL);
+
+	ms = (end.tv_sec - start.tv_sec) * 1000;
+	ms += (end.tv_usec - start.tv_usec) / 1000;
+	if (!ms) ms = 1;
+	printf("Optimized init, read from binary file took %u ms.\n",
+		ms);
+	unlink(name);
 
 
 

@@ -12,6 +12,7 @@ int main() {
 			"*adwords\n"
 			"http*//*.php");
 
+	// Yes yes, insecure mktemp. This is a unit test.
 	char name[] = "/tmp/bintestXXXXXX";
 	mktemp(name);
 
