@@ -92,3 +92,34 @@ void getsuffix(const char str[], char suf[3]) {
 	suf[1] = str[len - 1];
 	suf[2] = '\0';
 }
+
+void printctx(const struct urlctx * const ctx) {
+
+	u16 p, s, n;
+	u16 pmax, smax, nmax;
+
+	pmax = ctx->count;
+
+	printf("URL context has %u prefixes\n", pmax);
+
+	for (p = 0; p < pmax; p++) {
+		const struct prefix * const curpref = &ctx->pref[p];
+
+		smax = curpref->count;
+		printf("\tPrefix %u: %s has %u suffixes\n", p, curpref->prefix, smax);
+
+		for (s = 0; s < smax; s++) {
+			const struct suffix * const cursuf = &curpref->suf[s];
+
+			nmax = cursuf->count;
+			printf("\t\tSuffix %u: %s has %u needles\n", s, cursuf->suffix,
+					nmax);
+
+			for (n = 0; n < cursuf->count; n++) {
+				const struct needle * const curneed = &cursuf->need[n];
+
+				printf("\t\t\tNeedle %u: %s\n", n, curneed->needle);
+			}
+		}
+	}
+}

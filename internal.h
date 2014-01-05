@@ -84,6 +84,7 @@ struct needle {
 
 #define MAGIC "um1"
 
+void printctx(const struct urlctx *);
 
 #pragma GCC visibility pop
 
