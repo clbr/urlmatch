@@ -67,6 +67,7 @@ struct prefix {
 	u16 count;
 
 	char prefix[6];
+	u8 len;
 };
 
 struct suffix {

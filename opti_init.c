@@ -48,6 +48,8 @@ static urlctx *initbin(FILE * const f, const u32 inlen) {
 		buf += 2;
 		memcpy(curpref->prefix, buf, 5);
 		buf += 5;
+		curpref->len = *buf;
+		buf++;
 
 		curpref->suf = xcalloc(sizeof(struct suffix), curpref->count);
 
@@ -274,11 +276,13 @@ urlctx *url_init(const char contents[]) {
 	prefixes = 1;
 	strncpy(out->pref[0].prefix, outlines[0], 5);
 	preparepfx(out->pref[0].prefix);
+	out->pref[0].len = strlen(out->pref[0].prefix);
 	for (i = 1; i < lines; i++) {
 		if (wildpfxcmp(outlines[i - 1], outlines[i])) {
 			strncpy(out->pref[prefixes].prefix, outlines[i], 5);
 
 			preparepfx(out->pref[prefixes].prefix);
+			out->pref[prefixes].len = strlen(out->pref[prefixes].prefix);
 
 			prefixes++;
 		}

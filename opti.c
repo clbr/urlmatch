@@ -34,6 +34,7 @@ int url_save_optimized(const urlctx *ctx, const char file[]) {
 		const struct prefix * const curpref = &ctx->pref[p];
 		swrite(&curpref->count, 2, f);
 		swrite(curpref->prefix, 5, f);
+		swrite(&curpref->len, 1, f);
 
 		for (s = 0; s < curpref->count; s++) {
 			const struct suffix * const cursuf = &curpref->suf[s];
@@ -142,7 +143,7 @@ int url_match(const urlctx * const ctx, const char haystack[]) {
 
 		// Does this prefix match?
 		if (curpref->prefix[0] != '*' &&
-			strcmp(pref, curpref->prefix))
+			strncmp(pref, curpref->prefix, curpref->len))
 			continue;
 
 		const u32 smax = curpref->count;

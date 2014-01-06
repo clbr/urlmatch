@@ -154,6 +154,7 @@ int ctxcmp(const struct urlctx * const a, const struct urlctx * const b) {
 		smax = curpref->count;
 		if (curpref->count != curbpref->count) cmperr("suffix count");
 		if (strcmp(curpref->prefix, curbpref->prefix)) cmperr("prefix");
+		if (curpref->len != curbpref->len) cmperr("prefix length");
 
 		for (s = 0; s < smax; s++) {
 			const struct suffix * const cursuf = &curpref->suf[s];
