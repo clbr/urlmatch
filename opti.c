@@ -170,11 +170,19 @@ int url_match(const urlctx * const ctx, const char haystack[]) {
 						return 1;
 				} else {
 					// Is the longest streak in it?
-					if (curneed->longlen > 1 &&
-						!memmem(haystack, len,
-						curneed->needle + curneed->longest,
-						curneed->longlen))
-						continue;
+					if (curneed->longlen) {
+						if (curneed->longlen >= 4) {
+							if (!memmem(haystack, len,
+								curneed->needle + curneed->longest,
+								curneed->longlen))
+								continue;
+						} else {
+							if (!memchr(haystack,
+								curneed->needle[curneed->longest],
+								len))
+								continue;
+						}
+					}
 
 					// The prefix and suffix match, and it contains
 					// the longest streak. Do the actual comparison.
