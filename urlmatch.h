@@ -52,7 +52,9 @@ urlctx *url_init(const char contents[]) WUR_FUNC;
 // Save an optimized binary file for faster loading later. Returns 0 on success.
 int url_save_optimized(const urlctx *ctx, const char file[]) WUR_FUNC NONNULL(1);
 
-// Returns 1 if haystack matches the optimized pattern, 0 otherwise.
+/* Returns 1 if haystack matches the optimized pattern, 0 otherwise.
+ *
+ * It's safe to call from multiple threads at once, with the same context. */
 int url_match(const urlctx *ctx, const char haystack[]) WUR_FUNC PURE_FUNC NONNULL(1);
 
 // Frees this context.
