@@ -142,9 +142,13 @@ int url_match(const urlctx * const ctx, const char haystack[]) {
 		const struct prefix * const curpref = &ctx->pref[p];
 
 		// Does this prefix match?
-		if (curpref->prefix[0] != '*' &&
-			strncmp(pref, curpref->prefix, curpref->len))
-			continue;
+		if (curpref->prefix[0] != '*') {
+			int ret = strncmp(pref, curpref->prefix, curpref->len);
+			if (ret > 0)
+				continue;
+			if (ret < 0)
+				break;
+		}
 
 		const u32 smax = curpref->count;
 		for (s = 0; s < smax; s++) {
