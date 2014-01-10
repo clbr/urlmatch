@@ -128,9 +128,6 @@ static int finalcheck(const char find[], const u32 len,
 
 static void getsuffixlen(const char str[], char suf[3], const u32 len) {
 
-	if (len == 0)
-		return;
-
 	if (len == 1) {
 		suf[0] = str[0];
 		suf[1] = '\0';
