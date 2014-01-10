@@ -38,7 +38,11 @@ static urlctx *initbin(FILE * const f, const u32 inlen) {
 	memcpy(&out->count, buf, 2);
 	buf += 2;
 
+	memcpy(&out->storagelen, buf, 4);
+	buf += 4;
+
 	out->pref = xcalloc(sizeof(struct prefix), out->count);
+	out->storage = xcalloc(out->storagelen, 1);
 	u32 p, s, n;
 
 	for (p = 0; p < out->count; p++) {
@@ -75,7 +79,7 @@ static urlctx *initbin(FILE * const f, const u32 inlen) {
 				memcpy(&curneed->longlen, buf, 2);
 				buf += 2;
 
-				curneed->needle = xcalloc(curneed->len + 1, 1);
+				curneed->needle = poolalloc(out, curneed->len + 1);
 
 				memcpy((char *) curneed->needle, buf, curneed->len + 1);
 				buf += curneed->len + 1;
@@ -199,10 +203,13 @@ static void calclongest(const char needle[], const u16 len, const u16 wilds,
 	}
 }
 
-static void addneedle(struct needle * const to, const char from[]) {
+static void addneedle(urlctx * const ctx, struct needle * const to, const char from[]) {
 
-	to->needle = strdup(from);
-	to->len = strlen(from);
+	const u32 len = strlen(from);
+	to->needle = poolalloc(ctx, len + 1);
+	memcpy((char *) to->needle, from, len + 1);
+
+	to->len = len;
 	to->wilds = countwilds(from);
 
 	if (to->wilds)
@@ -213,7 +220,8 @@ urlctx *url_init(const char contents[]) {
 
 	u32 lines = 1;
 	const char *ptr = contents;
-	const char * const endbyte = ptr + strlen(contents);
+	const u32 contentlen = strlen(contents);
+	const char * const endbyte = ptr + contentlen;
 	for (; *ptr; ptr++) {
 		if (*ptr == '\n') lines++;
 	}
@@ -260,6 +268,8 @@ urlctx *url_init(const char contents[]) {
 	qsort(outlines, lines, sizeof(char *), cstrcmp);
 
 	urlctx * const out = xcalloc(sizeof(urlctx), 1);
+	out->storage = xcalloc(contentlen + 1, 1);
+	out->storagelen = contentlen + 1;
 
 	// How many prefixes do we have?
 	u32 prefixes = 1;
@@ -354,12 +364,12 @@ urlctx *url_init(const char contents[]) {
 
 				cursuf->count = 1;
 				memcpy(cursuf->suffix, suf, 3);
-				addneedle(&cursuf->need[0], outlines[j]);
+				addneedle(out, &cursuf->need[0], outlines[j]);
 				suffixes++;
 			} else {
 				struct suffix * const cursuf = &curpref->suf[suffixes - 1];
 
-				addneedle(&cursuf->need[cursuf->count],
+				addneedle(out, &cursuf->need[cursuf->count],
 						outlines[j]);
 				cursuf->count++;
 			}
@@ -369,6 +379,9 @@ urlctx *url_init(const char contents[]) {
 
 	for (i = 0; i < origlines; i++) free(outlines[i]);
 	free(outlines);
+
+	// Refresh storage size, so that binary save + load doesn't waste space
+	out->storagelen = out->used;
 
 	return out;
 }

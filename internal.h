@@ -60,6 +60,10 @@ static inline int wildprefix(const char str[]) WUR_FUNC PURE_FUNC;
 struct urlctx {
 	struct prefix *pref;
 	u16 count;
+
+	char *storage;
+	u32 storagelen;
+	u32 used;
 };
 
 struct prefix {
@@ -89,6 +93,7 @@ struct needle {
 
 void printctx(const struct urlctx *);
 int ctxcmp(const struct urlctx *, const struct urlctx *);
+void *poolalloc(struct urlctx *, const u32 bytes) WUR_FUNC;
 
 // Inlines
 

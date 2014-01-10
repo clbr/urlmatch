@@ -186,3 +186,14 @@ int ctxcmp(const struct urlctx * const a, const struct urlctx * const b) {
 
 	return 0;
 }
+
+void *poolalloc(struct urlctx * const ctx, const u32 bytes) {
+
+	if (ctx->used + bytes > ctx->storagelen)
+		die("Storage OOM");
+
+	const u32 cur = ctx->used;
+	ctx->used += bytes;
+
+	return ctx->storage + cur;
+}
