@@ -20,7 +20,6 @@ int main() {
 	test("foo", "barfoo", 0);
 	test("foo", "foofoobar", 0);
 
-	test("*", "", 1);
 	test("*", "ff", 1);
 	test("*", "gdfgfd", 1);
 	test("*", "*g****", 1);
