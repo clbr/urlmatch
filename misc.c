@@ -187,7 +187,16 @@ int ctxcmp(const struct urlctx * const a, const struct urlctx * const b) {
 	return 0;
 }
 
-void *poolalloc(struct urlctx * const ctx, const u32 bytes) {
+void *poolalloc(struct urlctx * const ctx, u32 bytes) {
+
+	/* Everything we return is 64-bit aligned.
+
+	   This is guaranteed by relying on our base
+	   pointer being ok, and only giving out
+	   multiples of 8. */
+
+	while (bytes % 8 != 0)
+		bytes++;
 
 	if (ctx->used + bytes > ctx->storagelen)
 		die("Storage OOM");

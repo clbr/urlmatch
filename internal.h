@@ -93,7 +93,7 @@ struct needle {
 
 void printctx(const struct urlctx *);
 int ctxcmp(const struct urlctx *, const struct urlctx *);
-void *poolalloc(struct urlctx *, const u32 bytes) WUR_FUNC;
+void *poolalloc(struct urlctx *, u32 bytes) WUR_FUNC;
 
 // Inlines
 

@@ -268,10 +268,11 @@ urlctx *url_init(const char contents[]) {
 	qsort(outlines, lines, sizeof(char *), cstrcmp);
 
 	urlctx * const out = xcalloc(sizeof(urlctx), 1);
+	// The theoretical maximum amount needed
 	out->storagelen = contentlen + 1 +
 				lines * (sizeof(struct suffix) +
 						sizeof(struct needle) +
-						sizeof(struct prefix));
+						sizeof(struct prefix) + 8);
 	out->storage = xcalloc(out->storagelen, 1);
 
 	// How many prefixes do we have?
