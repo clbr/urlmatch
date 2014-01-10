@@ -222,20 +222,6 @@ int url_match(const urlctx * const ctx, const char haystack[]) {
 
 void url_free(urlctx *ctx) {
 
-	u32 p, s;
-	for (p = 0; p < ctx->count; p++) {
-		struct prefix * const curpref = &ctx->pref[p];
-
-		for (s = 0; s < curpref->count; s++) {
-			struct suffix * const cursuf = &curpref->suf[s];
-
-			free(cursuf->need);
-		}
-
-		free(curpref->suf);
-	}
-
-	free(ctx->pref);
 	free(ctx->storage);
 	free(ctx);
 }

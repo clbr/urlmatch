@@ -41,8 +41,8 @@ static urlctx *initbin(FILE * const f, const u32 inlen) {
 	memcpy(&out->storagelen, buf, 4);
 	buf += 4;
 
-	out->pref = xcalloc(sizeof(struct prefix), out->count);
 	out->storage = xcalloc(out->storagelen, 1);
+	out->pref = poolalloc(out, sizeof(struct prefix) * out->count);
 	u32 p, s, n;
 
 	for (p = 0; p < out->count; p++) {
@@ -55,7 +55,7 @@ static urlctx *initbin(FILE * const f, const u32 inlen) {
 		curpref->len = *buf;
 		buf++;
 
-		curpref->suf = xcalloc(sizeof(struct suffix), curpref->count);
+		curpref->suf = poolalloc(out, sizeof(struct suffix) * curpref->count);
 
 		for (s = 0; s < curpref->count; s++) {
 			struct suffix * const cursuf = &curpref->suf[s];
@@ -65,7 +65,7 @@ static urlctx *initbin(FILE * const f, const u32 inlen) {
 			memcpy(cursuf->suffix, buf, 2);
 			buf += 2;
 
-			cursuf->need = xcalloc(sizeof(struct needle), cursuf->count);
+			cursuf->need = poolalloc(out, sizeof(struct needle) * cursuf->count);
 
 			for (n = 0; n < cursuf->count; n++) {
 				struct needle * const curneed = &cursuf->need[n];
@@ -268,8 +268,11 @@ urlctx *url_init(const char contents[]) {
 	qsort(outlines, lines, sizeof(char *), cstrcmp);
 
 	urlctx * const out = xcalloc(sizeof(urlctx), 1);
-	out->storage = xcalloc(contentlen + 1, 1);
-	out->storagelen = contentlen + 1;
+	out->storagelen = contentlen + 1 +
+				lines * (sizeof(struct suffix) +
+						sizeof(struct needle) +
+						sizeof(struct prefix));
+	out->storage = xcalloc(out->storagelen, 1);
 
 	// How many prefixes do we have?
 	u32 prefixes = 1;
@@ -280,7 +283,7 @@ urlctx *url_init(const char contents[]) {
 	}
 
 	out->count = prefixes;
-	out->pref = xcalloc(sizeof(struct prefix), prefixes);
+	out->pref = poolalloc(out, sizeof(struct prefix) * prefixes);
 
 	// Add each prefix
 	prefixes = 1;
@@ -317,7 +320,7 @@ urlctx *url_init(const char contents[]) {
 			memcpy(prevsuf, suf, 3);
 		}
 
-		curpref->suf = xcalloc(sizeof(struct suffix), suffixes);
+		curpref->suf = poolalloc(out, sizeof(struct suffix) * suffixes);
 		curpref->count = suffixes;
 
 		// For each suffix, how many needles do we have?
@@ -344,7 +347,7 @@ urlctx *url_init(const char contents[]) {
 
 		// Allocate the needle counts
 		for (j = 0; j < curpref->count; j++) {
-			curpref->suf[j].need = xcalloc(sizeof(struct needle),
+			curpref->suf[j].need = poolalloc(out, sizeof(struct needle) *
 							curpref->suf[j].count);
 		}
 
