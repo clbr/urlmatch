@@ -125,11 +125,29 @@ static int finalcheck(const char find[], const u32 len,
 
 }
 
+static void getsuffixlen(const char str[], char suf[3], const u32 len) {
+
+	if (len == 0)
+		return;
+
+	if (len == 1) {
+		suf[0] = str[0];
+		suf[1] = '\0';
+		return;
+	}
+
+	suf[0] = str[len - 2];
+	suf[1] = str[len - 1];
+	suf[2] = '\0';
+}
+
 int url_match(const urlctx * const ctx, const char haystack[]) {
 
 	const u32 len = strlen(haystack);
 	char suf[3], pref[6];
-	getsuffix(haystack, suf);
+
+	if (len < 1) return 0;
+	getsuffixlen(haystack, suf, len);
 
 	strncpy(pref, haystack, 5);
 	pref[5] = '\0';
