@@ -60,6 +60,11 @@ int url_match(const urlctx *ctx, const char haystack[]) WUR_FUNC PURE_FUNC NONNU
 // Frees this context.
 void url_free(urlctx *ctx) NONNULL(1);
 
+/* Auxiliary function for e.g. searching bookmarks
+ *
+ * Returns the match score, higher the better. -1 is returned on error. */
+int ratedsearch(const char needle[], const char haystack[]) WUR_FUNC PURE_FUNC;
+
 #undef PURE_FUNC
 #undef NORETURN_FUNC
 #undef CONST_FUNC
