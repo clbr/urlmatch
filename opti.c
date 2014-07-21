@@ -18,8 +18,20 @@
 #include "internal.h"
 #include "urlmatch.h"
 #include <zlib.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
 int url_save_optimized(const urlctx *ctx, const char file[]) {
+
+	const int fd = open(file, O_WRONLY | O_CREAT, 0644);
+	if (fd < 0)
+		return 1;
+
+	return url_save_optimized2(ctx, fd);
+}
+
+int url_save_optimized2(const urlctx *ctx, const int fd) {
 
 	char *buf;
 	size_t len;
@@ -62,7 +74,7 @@ int url_save_optimized(const urlctx *ctx, const char file[]) {
 
 	free(buf);
 
-	f = fopen(file, "w");
+	f = fdopen(fd, "w");
 	if (!f) return 1;
 
 	swrite(MAGIC, 3, f);
