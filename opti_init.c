@@ -93,7 +93,16 @@ static urlctx *initbin(FILE * const f, const u32 inlen) {
 
 urlctx *url_init_file(const char file[]) {
 
-	FILE * const f = fopen(file, "r");
+	const int fd = open(file, O_RDONLY);
+	if (fd < 0)
+		return NULL;
+
+	return url_init_file2(fd);
+}
+
+urlctx *url_init_file2(const int fd) {
+
+	FILE * const f = fdopen(fd, "r");
 	if (!f) return NULL;
 
 	fseek(f, 0, SEEK_END);

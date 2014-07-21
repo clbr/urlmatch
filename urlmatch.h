@@ -51,6 +51,7 @@ int url_simplematch(const char pattern[], const char haystack[]) WUR_FUNC PURE_F
  * On error they return NULL. */
 typedef struct urlctx urlctx;
 urlctx *url_init_file(const char file[]) WUR_FUNC;
+urlctx *url_init_file2(const int fd) WUR_FUNC;
 urlctx *url_init(const char contents[]) WUR_FUNC;
 
 // Save an optimized binary file for faster loading later. Returns 0 on success.

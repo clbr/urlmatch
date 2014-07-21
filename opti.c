@@ -18,9 +18,6 @@
 #include "internal.h"
 #include "urlmatch.h"
 #include <zlib.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
 
 int url_save_optimized(const urlctx *ctx, const char file[]) {
 
