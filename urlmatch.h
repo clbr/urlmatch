@@ -18,6 +18,10 @@
 #ifndef URLMATCH_H
 #define URLMATCH_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // Let's help the compiler
 #if __GNUC__ >= 4
 
@@ -71,5 +75,9 @@ int ratedsearch(const char needle[], const char haystack[]) WUR_FUNC PURE_FUNC;
 #undef CONST_FUNC
 #undef WUR_FUNC
 #undef NONNULL
+
+#ifdef __cplusplus
+} // extern C
+#endif
 
 #endif
