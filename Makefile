@@ -2,6 +2,8 @@
 
 CFLAGS += -Wall -Wextra
 
+PREFIX ?= /usr
+
 SRC = $(wildcard *.c)
 HDR = $(wildcard *.h)
 OBJ = $(SRC:.c=.o)
@@ -22,3 +24,7 @@ clean:
 
 test: all
 	$(MAKE) -C test
+
+install: all
+	install -m644 -D urlmatch.h $(DESTDIR)$(PREFIX)/include/urlmatch.h
+	install -m644 -D $(NAME) $(DESTDIR)$(PREFIX)/lib/$(NAME)
