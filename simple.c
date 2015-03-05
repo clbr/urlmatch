@@ -39,7 +39,7 @@ int url_simplematch(const char find[], const char hay[]) {
 			// If multiple wildcards in a row, skip to the last
 			while (find[i+1] == '*') i++;
 
-			if (i == len - 1)
+			if (i >= len - 1)
 				return 1;
 
 			// Wildcard, not last
