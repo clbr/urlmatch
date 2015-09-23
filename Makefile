@@ -26,5 +26,7 @@ test: all
 	$(MAKE) -C test
 
 install: all
-	install -m644 -D urlmatch.h $(DESTDIR)$(PREFIX)/include/urlmatch.h
-	install -m644 -D $(NAME) $(DESTDIR)$(PREFIX)/lib/$(NAME)
+	mkdir -p -m 755 $(DESTDIR)$(PREFIX)/include
+	install -m 644 urlmatch.h $(DESTDIR)$(PREFIX)/include
+	mkdir -p -m 755 $(DESTDIR)$(PREFIX)/lib
+	install -m 644 $(NAME) $(DESTDIR)$(PREFIX)/lib
